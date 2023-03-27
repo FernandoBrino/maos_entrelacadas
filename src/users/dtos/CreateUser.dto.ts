@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-import { User } from '../typeorm/User';
+import { User } from '../../typeorm/User';
 
 export class CreateUserDto {
   @IsNotEmpty()
