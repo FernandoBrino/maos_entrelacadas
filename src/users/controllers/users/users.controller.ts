@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   Inject,
   Post,
   UseInterceptors,
@@ -18,6 +19,12 @@ export class UsersController {
   constructor(
     @Inject('USERS_SERVICE') private readonly usersService: UsersService,
   ) {}
+
+  @Get('')
+  @UseInterceptors(ClassSerializerInterceptor)
+  getUsers() {
+    return this.usersService.getUsers();
+  }
 
   @Post('create')
   @UsePipes(ValidationPipe)

@@ -21,4 +21,10 @@ export class User {
 
   @Column()
   status: string;
+
+  // @Column()
+  // person_id: number;
+
+  // @Column()
+  // image_id: number;
 }
