@@ -22,10 +22,10 @@ export class User {
   @Column()
   status: string;
 
-  @Column()
-  person_id: number;
+  @Column({ name: 'person_id' })
+  personId: number;
 
-  @Column()
+  @Column({ name: 'image_id' })
   @OneToOne(() => Image)
-  image_id: number;
+  imageId: number;
 }

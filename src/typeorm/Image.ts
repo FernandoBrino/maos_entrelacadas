@@ -10,6 +10,6 @@ export class Image {
 
   url: string;
 
-  @OneToOne(() => User, (user) => user.image_id)
+  @OneToOne(() => User, (user) => user.imageId)
   user: User;
 }
