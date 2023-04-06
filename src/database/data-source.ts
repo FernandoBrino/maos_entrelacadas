@@ -1,8 +1,7 @@
-import { User } from 'src/typeorm/User';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { Image } from 'src/typeorm/Image';
 import { imageMigration1680801264731 } from './migrations';
 import * as dotenv from 'dotenv';
+import { Image, User } from 'src/typeorm';
 dotenv.config();
 
 export const dataSourceOptions: DataSourceOptions = {
