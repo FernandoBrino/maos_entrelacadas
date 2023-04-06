@@ -2,7 +2,8 @@
   "name": "maos_entrelacadas",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "main": "/dist/main.js",
+  "author": "Fernando Brino / Gabriel Borges",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.3",
     "@nestjs/passport": "^9.0.3",

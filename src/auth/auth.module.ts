@@ -9,6 +9,7 @@ import { LocalStrategy } from './passportStrategies/local.strategy';
 import { JwtStrategy } from './passportStrategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
+import { ConfigModule } from '@nestjs/config';
 dotenv.config();
 
 @Module({
@@ -16,9 +17,10 @@ dotenv.config();
     TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
-      secret: 'alo',
+      secret: process.env.NEST_SECRET_KEY,
       signOptions: { expiresIn: '600s' },
     }),
+    ConfigModule,
   ],
   controllers: [AuthController],
   providers: [

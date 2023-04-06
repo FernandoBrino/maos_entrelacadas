@@ -1,11 +1,11 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Image } from './Image';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    name: 'user_id',
   })
   id: number;
 
@@ -22,9 +22,10 @@ export class User {
   @Column()
   status: string;
 
-  // @Column()
-  // person_id: number;
+  @Column()
+  person_id: number;
 
-  // @Column()
-  // image_id: number;
+  @Column()
+  @OneToOne(() => Image)
+  image_id: number;
 }
