@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Image } from './Image';
+import { Person } from './Person';
 
 @Entity('users')
 export class User {
@@ -23,6 +24,7 @@ export class User {
   status: string;
 
   @Column({ name: 'person_id' })
+  @OneToOne(() => Person)
   personId: number;
 
   @Column({ name: 'image_id' })
