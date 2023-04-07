@@ -2,6 +2,7 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Gender } from './Gender';
 import { User } from './User';
 import { Contact } from './Contact';
+import { Address } from './Address';
 
 @Entity()
 export class Person {
@@ -36,6 +37,7 @@ export class Person {
   contactId: number;
 
   @Column({ name: 'address_id' })
+  @OneToOne(() => Address)
   addressId: number;
 
   @Column({ name: 'gender_id' })
