@@ -2,6 +2,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import {
   addressMigration1680828018085,
   contactMigration1680826019683,
+  fixRequiredDataMigration1680829236837,
   genderMigration1680808870809,
   imageMigration1680801264731,
   personMigration1680805472036,
@@ -26,6 +27,7 @@ export const dataSourceOptions: DataSourceOptions = {
     genderMigration1680808870809,
     contactMigration1680826019683,
     addressMigration1680828018085,
+    fixRequiredDataMigration1680829236837,
   ],
 };
 

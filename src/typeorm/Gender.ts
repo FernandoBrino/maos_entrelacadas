@@ -6,7 +6,7 @@ export class Gender {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
   @OneToOne(() => Person, (person) => person.genderId)

@@ -6,11 +6,11 @@ export class Contact {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column()
-  cellphone: number;
+  @Column({ nullable: false })
+  email: string;
 
-  @Column()
-  telephone: number;
+  @Column({ nullable: false })
+  cellphone: number;
 
   @OneToOne(() => Person, (person) => person.contactId)
   person: Person;

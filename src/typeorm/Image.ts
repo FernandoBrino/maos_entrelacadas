@@ -1,4 +1,4 @@
-import { Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './User';
 
 @Entity('images')
@@ -8,6 +8,7 @@ export class Image {
   })
   id: number;
 
+  @Column()
   url: string;
 
   @OneToOne(() => User, (user) => user.imageId)

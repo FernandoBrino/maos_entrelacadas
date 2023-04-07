@@ -20,14 +20,14 @@ export class User {
   @Column({ name: 'is_admin', default: false })
   isAdmin: boolean;
 
-  @Column()
+  @Column({ default: 'voluntário' })
   status: string;
 
   @Column({ name: 'person_id' })
   @OneToOne(() => Person)
   personId: number;
 
-  @Column({ name: 'image_id' })
+  @Column({ name: 'image_id', nullable: true })
   @OneToOne(() => Image)
   imageId: number;
 }
