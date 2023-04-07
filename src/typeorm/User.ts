@@ -1,5 +1,11 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Image } from './Image';
 import { Person } from './Person';
 
@@ -14,6 +20,9 @@ export class User {
   username: string;
 
   @Column({ nullable: false })
+  email: string;
+
+  @Column({ nullable: false })
   @Exclude()
   password: string;
 
@@ -23,8 +32,12 @@ export class User {
   @Column({ default: 'voluntário' })
   status: string;
 
+  @Column({ nullable: false })
+  cellphone: number;
+
   @Column({ name: 'person_id' })
-  @OneToOne(() => Person)
+  @OneToOne(() => Person, { eager: true })
+  @JoinColumn({ name: 'personId' })
   personId: number;
 
   @Column({ name: 'image_id', nullable: true })

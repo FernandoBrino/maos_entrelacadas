@@ -1,7 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Gender } from './Gender';
 import { User } from './User';
-import { Contact } from './Contact';
 import { Address } from './Address';
 
 @Entity()
@@ -25,10 +24,6 @@ export class Person {
 
   @Column({ nullable: true, default: null })
   cpf: number;
-
-  @Column({ name: 'contact_id', nullable: false })
-  @OneToOne(() => Contact)
-  contactId: number;
 
   @Column({ name: 'address_id', nullable: true })
   @OneToOne(() => Address)
