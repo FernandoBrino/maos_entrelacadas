@@ -1,6 +1,7 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Gender } from './Gender';
 import { User } from './User';
+import { Contact } from './Contact';
 
 @Entity()
 export class Person {
@@ -11,6 +12,9 @@ export class Person {
 
   @Column()
   name: string;
+
+  @Column()
+  email: string;
 
   @Column({ name: 'birth_date' })
   birthDate: Date;
@@ -28,6 +32,7 @@ export class Person {
   cpf: number;
 
   @Column({ name: 'contact_id' })
+  @OneToOne(() => Contact)
   contactId: number;
 
   @Column({ name: 'address_id' })
