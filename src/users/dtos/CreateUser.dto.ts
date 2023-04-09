@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNotEmptyObject,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { User } from '../../typeorm/User';
+import { CreatePersonDto } from './CreatePerson.dto';
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -12,6 +20,10 @@ export class CreateUserDto {
   username: string;
 
   @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example: '123@abc',
@@ -19,13 +31,15 @@ export class CreateUserDto {
   })
   password: string;
 
+  isAdmin: boolean;
+
   @IsNotEmpty()
-  @IsString()
-  @ApiProperty({
-    example: '1',
-    description: 'Informar o tipo do usuario',
-  })
-  status: string;
+  cellphone: string;
+
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => CreatePersonDto)
+  person: CreatePersonDto;
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);

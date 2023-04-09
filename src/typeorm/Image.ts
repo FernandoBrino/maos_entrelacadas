@@ -1,5 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './User';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('images')
 export class Image {
@@ -10,7 +9,4 @@ export class Image {
 
   @Column()
   url: string;
-
-  @OneToOne(() => User, (user) => user.imageId)
-  user: User;
 }

@@ -1,6 +1,11 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Gender } from './Gender';
-import { User } from './User';
 import { Address } from './Address';
 
 @Entity()
@@ -25,14 +30,11 @@ export class Person {
   @Column({ nullable: true, default: null })
   cpf: number;
 
-  @Column({ name: 'address_id', nullable: true })
-  @OneToOne(() => Address)
-  addressId: number;
+  @OneToOne(() => Address, { eager: true })
+  @JoinColumn()
+  address: Address;
 
-  @Column({ name: 'gender_id', nullable: false })
-  @OneToOne(() => Gender)
-  genderId: number;
-
-  @OneToOne(() => User, (user) => user.personId)
-  user: User;
+  @OneToOne(() => Gender, { eager: true })
+  @JoinColumn()
+  gender: Gender;
 }

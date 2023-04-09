@@ -33,14 +33,13 @@ export class User {
   status: string;
 
   @Column({ nullable: false })
-  cellphone: number;
+  cellphone: string;
 
-  @Column({ name: 'person_id' })
   @OneToOne(() => Person, { eager: true })
-  @JoinColumn({ name: 'personId' })
-  personId: number;
+  @JoinColumn()
+  person: Person;
 
-  @Column({ name: 'image_id', nullable: true })
-  @OneToOne(() => Image)
-  imageId: number;
+  @OneToOne(() => Image, { eager: true })
+  @JoinColumn()
+  image: Image;
 }

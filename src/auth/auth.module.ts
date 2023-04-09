@@ -10,11 +10,12 @@ import { JwtStrategy } from './passportStrategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
 import { ConfigModule } from '@nestjs/config';
+import { Gender, Person } from 'src/typeorm';
 dotenv.config();
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Person, Gender]),
     PassportModule,
     JwtModule.register({
       secret: process.env.NEST_SECRET_KEY,

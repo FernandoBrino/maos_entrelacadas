@@ -1,5 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Person } from './Person';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Address {
@@ -23,7 +22,4 @@ export class Address {
 
   @Column()
   zipcode: number;
-
-  @OneToOne(() => Person, (person) => person.addressId)
-  person: Person;
 }
