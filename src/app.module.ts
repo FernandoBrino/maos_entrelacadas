@@ -4,6 +4,7 @@ import { dataSourceOptions } from './database/data-source';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { GendersModule } from './genders/genders.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     AuthModule,
     ConfigModule.forRoot(),
+    GendersModule,
   ],
   controllers: [],
   providers: [],

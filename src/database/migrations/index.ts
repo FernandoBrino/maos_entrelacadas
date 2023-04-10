@@ -1,3 +1,3 @@
-import { initialMigration1681050795513 } from './1681050795513-initialMigration';
+import { initialMigration1681145102473 } from './1681145102473-initialMigration';
 
-export { initialMigration1681050795513 };
+export { initialMigration1681145102473 };
