@@ -19,7 +19,7 @@ export class Person {
   name: string;
 
   @Column({ name: 'birth_date', nullable: false })
-  birthDate: Date;
+  birthdate: Date;
 
   @Column({ name: 'created_at', default: new Date() })
   createdAt: Date;

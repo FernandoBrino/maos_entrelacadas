@@ -1,13 +1,19 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNotEmptyObject, ValidateNested } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNotEmptyObject,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 import { CreateGenderDto } from './CreateGender.dto';
 
 export class CreatePersonDto {
   @IsNotEmpty()
+  @MaxLength(50)
   name: string;
 
   @IsNotEmpty()
-  birthDate: string;
+  birthdate: string;
 
   @IsNotEmptyObject()
   @ValidateNested()

@@ -6,7 +6,7 @@ export type UserProps = {
 
   person: {
     name: string;
-    birthDate: string;
+    birthdate: string;
 
     gender: {
       name: string;
