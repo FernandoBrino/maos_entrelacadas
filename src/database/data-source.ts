@@ -12,7 +12,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   entities: [User, Image, Person, Gender, Address],
-  migrations: [initialMigration1681145102473],
+  migrations: ['../database/migrations/*{.ts,.js}'],
   ssl: { rejectUnauthorized: true },
   synchronize: false,
 };
