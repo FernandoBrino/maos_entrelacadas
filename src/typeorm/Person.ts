@@ -8,7 +8,7 @@ import {
 import { Gender } from './Gender';
 import { Address } from './Address';
 
-@Entity()
+@Entity('persons')
 export class Person {
   @PrimaryGeneratedColumn({
     type: 'bigint',

@@ -11,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.DATABASE_USERNAME,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
-  entities: [User, Image, Person, Gender, Address],
+  entities: [__dirname + '../typeorm/*{.ts,.js}'],
   migrations: ['../database/migrations/*{.ts,.js}'],
   ssl: { rejectUnauthorized: true },
   synchronize: false,
