@@ -3,6 +3,8 @@ import {
   IsNotEmpty,
   IsNotEmptyObject,
   IsString,
+  MaxLength,
+  MinLength,
   ValidateNested,
 } from 'class-validator';
 import { User } from '../../typeorm/User';
@@ -12,19 +14,24 @@ import { Type } from 'class-transformer';
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
+  @MaxLength(50)
   username: string;
 
   @IsNotEmpty()
   @IsEmail()
+  @MaxLength(50)
   email: string;
 
   @IsNotEmpty()
   @IsString()
+  @MinLength(8)
+  @MaxLength(100)
   password: string;
 
   isAdmin: boolean;
 
   @IsNotEmpty()
+  @MaxLength(11)
   cellphone: string;
 
   @IsNotEmptyObject()
