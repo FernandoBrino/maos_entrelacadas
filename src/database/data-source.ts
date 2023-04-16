@@ -1,10 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { Address, Gender, Image, Person, User } from 'src/typeorm';
-import {
-  initialMigration1681145102473,
-  renamedBirthdateUserMigration1681512097561,
-} from './migrations';
 import * as dotenv from 'dotenv';
+import { initialMigration1681684680818 } from './migrations';
 dotenv.config();
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -15,10 +12,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   entities: [User, Image, Person, Gender, Address],
-  migrations: [
-    initialMigration1681145102473,
-    renamedBirthdateUserMigration1681512097561,
-  ],
+  migrations: [initialMigration1681684680818],
   ssl: { rejectUnauthorized: true },
   synchronize: false,
 };

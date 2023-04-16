@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -34,7 +35,7 @@ export class Person {
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => Gender, { eager: true })
+  @ManyToOne(() => Gender, { eager: true })
   @JoinColumn()
   gender: Gender;
 }

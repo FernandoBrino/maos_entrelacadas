@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class initialMigration1681145102473 implements MigrationInterface {
-  name = 'initialMigration1681145102473';
+export class initialMigration1681684680818 implements MigrationInterface {
+  name = 'initialMigration1681684680818';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -14,7 +14,7 @@ export class initialMigration1681145102473 implements MigrationInterface {
       `CREATE TABLE "addresses" ("id" BIGSERIAL NOT NULL, "country" character varying NOT NULL, "state" character varying NOT NULL, "district" character varying NOT NULL, "street" character varying NOT NULL, "number" integer NOT NULL, "zipcode" integer NOT NULL, CONSTRAINT "PK_745d8f43d3af10ab8247465e450" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "person" ("id" BIGSERIAL NOT NULL, "name" character varying NOT NULL, "birth_date" TIMESTAMP NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT '"2023-04-10T16:45:02.934Z"', "update_at" TIMESTAMP NOT NULL DEFAULT '"2023-04-10T16:45:02.934Z"', "cpf" integer, "addressId" bigint, "genderId" bigint, CONSTRAINT "REL_a793ed25458ce9bc1584889cb1" UNIQUE ("addressId"), CONSTRAINT "REL_512527b75541c47b591be68a57" UNIQUE ("genderId"), CONSTRAINT "PK_5fdaf670315c4b7e70cce85daa3" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "person" ("id" BIGSERIAL NOT NULL, "name" character varying NOT NULL, "birth_date" TIMESTAMP NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT '"2023-04-16T22:38:01.275Z"', "update_at" TIMESTAMP NOT NULL DEFAULT '"2023-04-16T22:38:01.275Z"', "cpf" integer, "addressId" bigint, "genderId" bigint, CONSTRAINT "REL_a793ed25458ce9bc1584889cb1" UNIQUE ("addressId"), CONSTRAINT "PK_5fdaf670315c4b7e70cce85daa3" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "users" ("id" BIGSERIAL NOT NULL, "username" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "is_admin" boolean NOT NULL DEFAULT false, "status" character varying NOT NULL DEFAULT 'voluntário', "cellphone" character varying NOT NULL, "personId" bigint, "imageId" bigint, CONSTRAINT "REL_ddd0d20e45dbd0d1536dc08203" UNIQUE ("personId"), CONSTRAINT "REL_0b9cf86bd47b4393165e9bddf3" UNIQUE ("imageId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,

@@ -22,7 +22,7 @@ export class UsersService {
   async createUser(userProps: UserProps) {
     const usernameAlreadyExists = this.findUserByUsername(userProps.username);
 
-    if (!usernameAlreadyExists) {
+    if (usernameAlreadyExists) {
       throw new BadRequestException('Username already taken!');
     }
 

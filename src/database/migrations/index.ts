@@ -1,7 +1,3 @@
-import { initialMigration1681145102473 } from './1681145102473-initialMigration';
-import { renamedBirthdateUserMigration1681512097561 } from './1681512097561-renamed_birthdate_UserMigration';
+import { initialMigration1681684680818 } from './1681684680818-initialMigration';
 
-export {
-  initialMigration1681145102473,
-  renamedBirthdateUserMigration1681512097561,
-};
+export { initialMigration1681684680818 };
