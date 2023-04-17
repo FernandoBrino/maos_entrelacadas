@@ -9,7 +9,7 @@ import {
 import { Gender } from './Gender';
 import { Address } from './Address';
 
-@Entity()
+@Entity('person')
 export class Person {
   @PrimaryGeneratedColumn({
     type: 'bigint',
