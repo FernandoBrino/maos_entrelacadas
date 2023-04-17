@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Gender, Person, User } from 'src/typeorm';
 import { UserProps } from 'src/users/types/User';
@@ -13,6 +14,7 @@ export class UsersService {
     private readonly personRepository: Repository<Person>,
     @InjectRepository(Gender)
     private readonly genderRepository: Repository<Gender>,
+    private jwtService: JwtService,
   ) {}
 
   getUsers() {
@@ -20,7 +22,9 @@ export class UsersService {
   }
 
   async createUser(userProps: UserProps) {
-    const usernameAlreadyExists = this.findUserByUsername(userProps.username);
+    const usernameAlreadyExists = await this.findUserByUsername(
+      userProps.username,
+    );
 
     if (usernameAlreadyExists) {
       throw new BadRequestException('Username already taken!');
@@ -47,7 +51,12 @@ export class UsersService {
     await this.personRepository.save(newPerson);
     const userCreated = await this.userRepository.save(newUser);
 
-    return userCreated;
+    const payload = { email: userCreated.email, sub: userCreated.id };
+
+    return {
+      userCreated,
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   findUserByUsername(username: string) {
