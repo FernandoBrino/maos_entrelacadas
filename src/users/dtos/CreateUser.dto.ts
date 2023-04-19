@@ -10,6 +10,7 @@ import {
 import { User } from '../../typeorm/User';
 import { CreatePersonDto } from './CreatePerson.dto';
 import { Type } from 'class-transformer';
+import { CreateImageDto } from './CreateImage.dto';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -33,6 +34,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MaxLength(11)
   cellphone: string;
+
+  @ValidateNested()
+  @Type(() => CreateImageDto)
+  image: CreateImageDto;
 
   @IsNotEmptyObject()
   @ValidateNested()

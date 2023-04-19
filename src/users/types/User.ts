@@ -3,6 +3,9 @@ export type UserProps = {
   email: string;
   password: string;
   cellphone: string;
+  image: {
+    url: string;
+  };
 
   person: {
     name: string;

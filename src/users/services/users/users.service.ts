@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Gender, Person, User } from 'src/typeorm';
+import { Gender, Image, Person, User } from 'src/typeorm';
 import { UserProps } from 'src/users/types/User';
 import { encodePassword } from 'src/utils/bcrypt';
 import { Repository } from 'typeorm';
@@ -14,6 +14,8 @@ export class UsersService {
     private readonly personRepository: Repository<Person>,
     @InjectRepository(Gender)
     private readonly genderRepository: Repository<Gender>,
+    @InjectRepository(Image)
+    private readonly imageRepository: Repository<Image>,
     private jwtService: JwtService,
   ) {}
 
@@ -37,24 +39,30 @@ export class UsersService {
       password,
     });
 
+    const newImage = this.imageRepository.create({
+      ...userProps.image,
+    });
+
     const newPerson = this.personRepository.create({
       ...userProps.person,
     });
 
-    const gender = await this.genderRepository.findOne({
+    const newGender = await this.genderRepository.findOne({
       where: { name: userProps.person.gender.name },
     });
 
+    newUser.image = newImage;
     newUser.person = newPerson;
-    newUser.person.gender = gender;
+    newUser.person.gender = newGender;
 
+    await this.imageRepository.save(newImage);
     await this.personRepository.save(newPerson);
-    const userCreated = await this.userRepository.save(newUser);
+    const user = await this.userRepository.save(newUser);
 
-    const payload = { email: userCreated.email, sub: userCreated.id };
+    const payload = { email: user.email, sub: user.id };
 
     return {
-      userCreated,
+      user,
       access_token: this.jwtService.sign(payload),
     };
   }
