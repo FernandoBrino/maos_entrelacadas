@@ -7,7 +7,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
-import { User } from '../../typeorm/User';
+import { User } from '../../../typeorm/User';
 import { CreatePersonDto } from './CreatePerson.dto';
 import { Type } from 'class-transformer';
 import { CreateImageDto } from './CreateImage.dto';
@@ -20,6 +20,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsEmail()
+  @IsString()
   @MaxLength(50)
   email: string;
 
@@ -29,9 +30,8 @@ export class CreateUserDto {
   @MaxLength(100)
   password: string;
 
-  isAdmin: boolean;
-
   @IsNotEmpty()
+  @IsString()
   @MaxLength(11)
   cellphone: string;
 

@@ -7,7 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Person, Gender, Address, Image]),
+    TypeOrmModule.forFeature([User, Person, Gender, Address, Image, Address]),
     JwtModule.register({
       secret: process.env.NEST_SECRET_KEY,
       signOptions: { expiresIn: '600s' },
