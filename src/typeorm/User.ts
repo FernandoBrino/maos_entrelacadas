@@ -35,6 +35,12 @@ export class User {
   @Column({ nullable: false })
   cellphone: string;
 
+  @Column({ name: 'created_at', default: new Date() })
+  createdAt: Date;
+
+  @Column({ name: 'update_at', default: new Date() })
+  updatedAt: Date;
+
   @OneToOne(() => Person, { eager: true })
   @JoinColumn()
   person: Person;

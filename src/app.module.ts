@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { GendersModule } from './genders/genders.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { GendersModule } from './genders/genders.module';
     AuthModule,
     ConfigModule.forRoot(),
     GendersModule,
+    EventsModule,
   ],
   controllers: [],
   providers: [],

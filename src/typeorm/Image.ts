@@ -9,4 +9,10 @@ export class Image {
 
   @Column()
   url: string;
+
+  @Column({ name: 'created_at', default: new Date() })
+  createdAt: Date;
+
+  @Column({ name: 'update_at', default: new Date() })
+  updatedAt: Date;
 }

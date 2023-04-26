@@ -83,21 +83,25 @@ export class UsersService {
     const updatedUser = this.userRepository.create({
       ...user,
       ...updateUserDto,
+      updatedAt: new Date(),
     });
 
     const updatedImage = this.imageRepository.create({
       ...user.image,
       ...updateUserDto.image,
+      updatedAt: new Date(),
     });
 
     const updatedPerson = this.personRepository.create({
       ...user.person,
       ...updateUserDto.person,
+      updatedAt: new Date(),
     });
 
     const updatedAddress = this.addressRepository.create({
       ...user.person.address,
       ...updateUserDto.person.address,
+      updatedAt: new Date(),
     });
 
     const updatedGender =

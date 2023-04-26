@@ -1,27 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('addresses')
-export class Address {
+@Entity('events')
+export class Event {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column()
-  country: string;
+  title: string;
 
   @Column()
-  state: string;
+  description: string;
 
-  @Column()
-  district: string;
-
-  @Column()
-  street: string;
-
-  @Column()
-  number: number;
-
-  @Column()
-  zipcode: number;
+  @Column({ name: 'event_at' })
+  eventAt: Date;
 
   @Column({ name: 'created_at', default: new Date() })
   createdAt: Date;
