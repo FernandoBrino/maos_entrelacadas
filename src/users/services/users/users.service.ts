@@ -45,10 +45,6 @@ export class UsersService {
       password,
     });
 
-    const newImage = this.imageRepository.create({
-      ...userProps.image,
-    });
-
     const newPerson = this.personRepository.create({
       ...userProps.person,
     });
@@ -57,11 +53,18 @@ export class UsersService {
       where: { name: userProps.person.gender.name },
     });
 
-    newUser.image = newImage;
+    if (userProps.image) {
+      const newImage = this.imageRepository.create({
+        ...userProps.image,
+      });
+
+      newUser.image = newImage;
+      await this.imageRepository.save(newImage);
+    }
+
     newUser.person = newPerson;
     newUser.person.gender = newGender;
 
-    await this.imageRepository.save(newImage);
     await this.personRepository.save(newPerson);
     const user = await this.userRepository.save(newUser);
 
