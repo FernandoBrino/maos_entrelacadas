@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { GendersModule } from './genders/genders.module';
 import { EventsModule } from './events/events.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { EventsModule } from './events/events.module';
     ConfigModule.forRoot(),
     GendersModule,
     EventsModule,
+    SharedModule,
   ],
   controllers: [],
   providers: [],
