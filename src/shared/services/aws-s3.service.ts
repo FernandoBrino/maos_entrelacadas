@@ -1,7 +1,7 @@
-import { S3 } from '@aws-sdk/client-s3';
-import { GeneratorService } from './generator.service';
-import mime from 'mime-types';
-import { ApiConfigService } from './api-config.service';
+import { S3 } from "@aws-sdk/client-s3";
+import { GeneratorService } from "./generator.service";
+import mime from "mime-types";
+import { ApiConfigService } from "./api-config.service";
 
 interface IFile {
   encoding: string;
@@ -12,12 +12,14 @@ interface IFile {
   size: number;
 }
 
+type Folder = "Comunicado" | "Evento" | "Avatar";
+
 export class AwsS3Service {
   private readonly s3: S3;
 
   constructor(
     public configService: ApiConfigService,
-    public generatorService: GeneratorService,
+    public generatorService: GeneratorService
   ) {
     const awsS3Config = configService.awsS3Config;
 
@@ -27,15 +29,15 @@ export class AwsS3Service {
     });
   }
 
-  async uploadImage(file: IFile): Promise<string> {
+  async uploadImage(file: IFile, folder: Folder): Promise<string> {
     const fileName = this.generatorService.fileName(
-      <string>mime.extension(file.mimetype),
+      <string>mime.extension(file.mimetype)
     );
-    const key = 'images/' + fileName;
+    const key = `images/${folder}/${fileName}`;
     await this.s3.putObject({
       Bucket: this.configService.awsS3Config.bucketName,
       Body: file.buffer,
-      ACL: 'public-read',
+      ACL: "public-read",
       Key: key,
     });
 
