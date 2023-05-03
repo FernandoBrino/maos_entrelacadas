@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AwsS3Service } from 'src/shared/services/aws-s3.service';
+import { ValidatorService } from 'src/shared/services/validator.service';
 import { Address, Gender, Image, Person, User } from 'src/typeorm';
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
@@ -20,6 +22,8 @@ export class UsersService {
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
     private jwtService: JwtService,
+    private validatorService: ValidatorService,
+    private awsS3Service: AwsS3Service,
   ) {}
 
   getUsers() {
@@ -81,6 +85,13 @@ export class UsersService {
 
     if (!user) {
       throw new Error("User doesn't exists!");
+    }
+
+    if (
+      updateUserDto.image &&
+      !this.validatorService.isImage(updateUserDto.image.url)
+    ) {
+      throw new Error('Invalid image!');
     }
 
     const updatedUser = this.userRepository.create({
