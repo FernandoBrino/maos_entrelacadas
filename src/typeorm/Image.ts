@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Event } from './Event';
 
 @Entity('images')
 export class Image {
@@ -15,4 +16,7 @@ export class Image {
 
   @Column({ name: 'update_at', default: new Date() })
   updatedAt: Date;
+
+  @ManyToOne(() => Event, (event) => event.images)
+  event: Event;
 }
