@@ -3,11 +3,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Image } from './Image';
 import { Person } from './Person';
+import { Event } from './Event';
 
 @Entity('users')
 export class User {
@@ -48,4 +50,8 @@ export class User {
   @OneToOne(() => Image, { eager: true })
   @JoinColumn()
   image: Image;
+
+  @ManyToMany(() => Event)
+  @JoinColumn()
+  events: Event[];
 }

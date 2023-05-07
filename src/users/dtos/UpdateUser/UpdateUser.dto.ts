@@ -1,5 +1,4 @@
 import { Type } from 'class-transformer';
-import { UpdateImageDto } from './UpdateImage';
 import { UpdatePersonDto } from './UpdatePerson';
 import {
   IsBoolean,
@@ -10,6 +9,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
+import { ImageDto } from 'src/dtos/ImageDto';
 
 export class UpdateUserDto {
   @IsString()
@@ -48,7 +48,7 @@ export class UpdateUserDto {
   person: UpdatePersonDto;
 
   @ValidateNested()
-  @Type(() => UpdateImageDto)
+  @Type(() => ImageDto)
   @IsOptional()
-  image: UpdateImageDto;
+  image: ImageDto;
 }

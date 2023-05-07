@@ -21,6 +21,12 @@ export class Event {
   @Column({ name: 'update_at', default: new Date() })
   updatedAt: Date;
 
+  @Column({ name: 'start_time' })
+  startTime: Date;
+
+  @Column({ name: 'end_time' })
+  endTime: Date;
+
   @OneToMany(() => Image, (image) => image.event)
   images: Image[];
 }

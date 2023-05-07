@@ -2,7 +2,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNotEmptyObject,
-  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -11,7 +10,7 @@ import {
 import { User } from '../../../typeorm/User';
 import { CreatePersonDto } from './CreatePerson.dto';
 import { Type } from 'class-transformer';
-import { CreateImageDto } from './CreateImage.dto';
+import { ImageDto } from 'src/dtos/ImageDto';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -37,8 +36,8 @@ export class CreateUserDto {
   cellphone: string;
 
   @ValidateNested()
-  @Type(() => CreateImageDto)
-  image: CreateImageDto;
+  @Type(() => ImageDto)
+  image: ImageDto;
 
   @IsNotEmptyObject()
   @ValidateNested()
