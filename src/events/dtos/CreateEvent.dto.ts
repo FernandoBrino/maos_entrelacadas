@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { ImageDto } from 'src/dtos/ImageDto';
 
 export class CreateEventDto {
@@ -19,5 +20,7 @@ export class CreateEventDto {
   @IsNotEmpty()
   endTime: Date;
 
+  @Type(() => ImageDto)
+  @ValidateNested()
   images: ImageDto[];
 }

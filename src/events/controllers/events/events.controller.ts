@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
   Post,
   UsePipes,
@@ -14,6 +15,11 @@ export class EventsController {
   constructor(
     @Inject('EVENTS_SERVICE') private readonly eventsService: EventsService,
   ) {}
+
+  @Get('')
+  getEvents() {
+    return this.eventsService.getEvents();
+  }
 
   @Post('create')
   @UsePipes(ValidationPipe)

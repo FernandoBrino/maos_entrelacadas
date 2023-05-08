@@ -6,6 +6,7 @@ import {
   eventMigration1682461712977,
   eventUpdateMigration1683484201325,
   initialMigration1681684680818,
+  sideRelationEventMigration1683495707653,
 } from './migrations';
 import { Event } from 'src/typeorm/Event';
 dotenv.config();
@@ -23,6 +24,7 @@ export const dataSourceOptions: DataSourceOptions = {
     eventMigration1682461712977,
     eventImageRelationMigration1683042666435,
     eventUpdateMigration1683484201325,
+    sideRelationEventMigration1683495707653,
   ],
   ssl: { rejectUnauthorized: true },
   synchronize: false,

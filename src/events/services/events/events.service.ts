@@ -10,6 +10,10 @@ export class EventsService {
     @InjectRepository(Event) private eventRepository: Repository<Event>,
   ) {}
 
+  getEvents() {
+    return this.eventRepository.find();
+  }
+
   createEvent(eventDto: CreateEventDto) {
     const newEvent = this.eventRepository.create({ ...eventDto });
 
