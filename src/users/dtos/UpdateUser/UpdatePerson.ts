@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  MinLength,
   ValidateNested,
 } from 'class-validator';
 
@@ -18,7 +17,7 @@ export class UpdatePersonDto {
 
   @IsString()
   @IsOptional()
-  birthdate: string;
+  birthdate: Date;
 
   @IsNumber()
   @IsOptional()

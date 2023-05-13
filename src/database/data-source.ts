@@ -1,14 +1,14 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { Address, Gender, Image, Person, User } from 'src/typeorm';
 import * as dotenv from 'dotenv';
+import { Event } from 'src/typeorm/Event';
 import {
   eventImageRelationMigration1683042666435,
   eventMigration1682461712977,
-  eventUpdateMigration1683484201325,
   initialMigration1681684680818,
+  initialMigration1683916866648,
   sideRelationEventMigration1683495707653,
 } from './migrations';
-import { Event } from 'src/typeorm/Event';
 dotenv.config();
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -20,10 +20,10 @@ export const dataSourceOptions: DataSourceOptions = {
   database: process.env.DATABASE,
   entities: [User, Image, Person, Gender, Address, Event],
   migrations: [
+    initialMigration1683916866648,
     initialMigration1681684680818,
     eventMigration1682461712977,
     eventImageRelationMigration1683042666435,
-    eventUpdateMigration1683484201325,
     sideRelationEventMigration1683495707653,
   ],
   ssl: { rejectUnauthorized: true },

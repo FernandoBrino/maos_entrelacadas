@@ -1,7 +1,7 @@
 import {
   Column,
   Entity,
-  JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -39,6 +39,6 @@ export class Event {
   images: Image[];
 
   @ManyToMany(() => User)
-  @JoinColumn()
+  @JoinTable()
   users: User[];
 }

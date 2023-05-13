@@ -15,8 +15,7 @@ export class CreatePersonDto {
   name: string;
 
   @IsNotEmpty()
-  @IsString()
-  birthdate: string;
+  birthdate: Date;
 
   @IsNotEmptyObject()
   @ValidateNested()

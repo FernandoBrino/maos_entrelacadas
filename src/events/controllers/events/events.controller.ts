@@ -3,6 +3,9 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
@@ -25,5 +28,13 @@ export class EventsController {
   @UsePipes(ValidationPipe)
   createEvent(@Body() eventDto: CreateEventDto) {
     return this.eventsService.createEvent(eventDto);
+  }
+
+  @Patch('signup/:userId/:eventId')
+  signupUserEvent(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('eventId', ParseIntPipe) eventId: number,
+  ) {
+    return this.eventsService.signupUserEvent({ userId, eventId });
   }
 }

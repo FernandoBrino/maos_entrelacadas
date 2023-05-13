@@ -9,7 +9,7 @@ export class CreateEventDto {
 
   @IsNotEmpty()
   @IsString()
-  descscription: string;
+  description: string;
 
   @IsNotEmpty()
   eventAt: Date;
