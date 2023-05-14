@@ -35,7 +35,7 @@ export class EventsService {
     });
 
     const userAlreadySignedToEvent = event.users.find(
-      (user) => user.id === userId,
+      (user) => user.id == userId,
     );
 
     if (userAlreadySignedToEvent) {
