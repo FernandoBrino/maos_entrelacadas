@@ -27,12 +27,20 @@ export class EventsService {
   async signupUserEvent({ userId, eventId }: SignupUserEventProps) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
     const event = await this.eventRepository.findOne({
       relations: {
         users: true,
       },
       where: { id: eventId },
     });
+
+    if (!event) {
+      throw new BadRequestException('Event not found');
+    }
 
     const userAlreadySignedToEvent = event.users.find(
       (user) => user.id == userId,
