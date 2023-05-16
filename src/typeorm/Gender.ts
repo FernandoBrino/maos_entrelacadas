@@ -7,4 +7,10 @@ export class Gender {
 
   @Column({ nullable: false })
   name: string;
+
+  @Column({ name: 'created_at', default: new Date() })
+  createdAt: Date;
+
+  @Column({ name: 'updated_at', default: new Date() })
+  updatedAt: Date;
 }

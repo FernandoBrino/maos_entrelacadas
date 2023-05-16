@@ -14,7 +14,7 @@ export class Image {
   @Column({ name: 'created_at', default: new Date() })
   createdAt: Date;
 
-  @Column({ name: 'update_at', default: new Date() })
+  @Column({ name: 'updated_at', default: new Date() })
   updatedAt: Date;
 
   @ManyToOne(() => Event, (event) => event.images)
