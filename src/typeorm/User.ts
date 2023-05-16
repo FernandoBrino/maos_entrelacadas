@@ -32,7 +32,7 @@ export class User {
   @Column({ name: 'is_admin', default: false })
   isAdmin: boolean;
 
-  @Column({ default: 'voluntário' })
+  @Column({ default: 'Voluntário' })
   status: string;
 
   @Column({ nullable: false })

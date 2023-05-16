@@ -1,3 +1,4 @@
+import { MaxLength } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('addresses')
@@ -18,10 +19,14 @@ export class Address {
   street: string;
 
   @Column()
-  number: number;
+  number: string;
 
   @Column()
   zipcode: number;
+
+  @Column()
+  @MaxLength(50)
+  complement: string;
 
   @Column({ name: 'created_at', default: new Date() })
   createdAt: Date;
