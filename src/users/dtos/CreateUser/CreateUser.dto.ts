@@ -43,8 +43,4 @@ export class CreateUserDto {
   @ValidateNested()
   @Type(() => CreatePersonDto)
   person: CreatePersonDto;
-
-  constructor(partial: Partial<User>) {
-    Object.assign(this, partial);
-  }
 }

@@ -19,7 +19,11 @@ export class UpdateAddressDto {
 
   @IsNumber()
   @IsOptional()
-  number: number;
+  number: string;
+
+  @IsOptional()
+  @IsString()
+  complement: string;
 
   @IsNumber()
   @IsOptional()

@@ -3,6 +3,7 @@ import { Address, Gender, Image, Person, User } from 'src/typeorm';
 import * as dotenv from 'dotenv';
 import { Event } from 'src/typeorm/Event';
 import {
+  addressComplementMigration1684416422039,
   featGenderMigration1684250092385,
   fixUpdatedAtImageMigration1684172806013,
   fixUpdatedAtMigration1684248600503,
@@ -23,6 +24,7 @@ export const dataSourceOptions: DataSourceOptions = {
     fixUpdatedAtImageMigration1684172806013,
     fixUpdatedAtMigration1684248600503,
     featGenderMigration1684250092385,
+    addressComplementMigration1684416422039,
   ],
   ssl: { rejectUnauthorized: true },
   synchronize: false,

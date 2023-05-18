@@ -51,4 +51,8 @@ export class User {
   @OneToOne(() => Image, { eager: true })
   @JoinColumn()
   image: Image;
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }
