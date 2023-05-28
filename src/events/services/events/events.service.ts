@@ -28,8 +28,12 @@ export class EventsService {
   }
 
   async signupUserEvent({ userId, eventId }: SignupUserEventProps) {
-    const user = this.userRepository.findOne({ where: { id: userId } });
-    const event = this.eventRepository.findOne({ where: { id: eventId } });
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    const event = await this.eventRepository.findOne({
+      where: { id: eventId },
+    });
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -38,5 +42,19 @@ export class EventsService {
     if (!event) {
       throw new NotFoundException('Event not found');
     }
+
+    const signupUserToEvent = this.userEventRepository.create({
+      userId,
+      eventId,
+    });
+
+    user.userEvents = [...user.userEvents, signupUserToEvent];
+    event.userEvents = [...event.userEvents, signupUserToEvent];
+
+    await this.userRepository.save(user);
+    await this.eventRepository.save(user);
+    await this.userEventRepository.save(signupUserToEvent);
+
+    return event;
   }
 }

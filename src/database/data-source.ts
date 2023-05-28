@@ -4,7 +4,8 @@ import * as dotenv from 'dotenv';
 import { Event } from 'src/typeorm/Event';
 import { Announcement } from 'src/typeorm/Announcement';
 import { UserEvent } from 'src/typeorm/UserEvent';
-import { initialMigration1685287055106 } from './migrations';
+import { initialMigration1685293330636 } from './migrations';
+
 dotenv.config();
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -24,7 +25,7 @@ export const dataSourceOptions: DataSourceOptions = {
     Announcement,
     UserEvent,
   ],
-  migrations: [initialMigration1685287055106],
+  migrations: [initialMigration1685293330636],
   ssl: { rejectUnauthorized: true },
   synchronize: false,
 };

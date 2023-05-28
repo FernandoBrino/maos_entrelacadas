@@ -1,13 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Image } from './Image';
-import { User } from './User';
 import { UserEvent } from './UserEvent';
 
 @Entity('events')
@@ -39,6 +31,6 @@ export class Event {
   @OneToMany(() => Image, (image) => image.event)
   images: Image[];
 
-  @OneToMany(() => UserEvent, (userEvent) => userEvent.event)
+  @OneToMany(() => UserEvent, (userEvent) => userEvent.event, { eager: true })
   userEvents: UserEvent[];
 }

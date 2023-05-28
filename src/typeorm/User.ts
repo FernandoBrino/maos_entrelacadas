@@ -51,7 +51,7 @@ export class User {
   @JoinColumn()
   image: Image;
 
-  @OneToMany(() => UserEvent, (userEvent) => userEvent.user)
+  @OneToMany(() => UserEvent, (userEvent) => userEvent.user, { eager: true })
   userEvents: UserEvent[];
 
   constructor(partial: Partial<User>) {
