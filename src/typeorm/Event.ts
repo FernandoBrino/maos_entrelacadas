@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Image } from './Image';
 import { User } from './User';
+import { UserEvent } from './UserEvent';
 
 @Entity('events')
 export class Event {
@@ -38,7 +39,6 @@ export class Event {
   @OneToMany(() => Image, (image) => image.event)
   images: Image[];
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  users: User[];
+  @OneToMany(() => UserEvent, (userEvent) => userEvent.event)
+  userEvents: UserEvent[];
 }

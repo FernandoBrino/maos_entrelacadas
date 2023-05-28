@@ -30,6 +30,11 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
+  @Get('signupEvents/:id')
+  getSignupEventsByUser(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.getSignupEventsByUser(id);
+  }
+
   @Post('create')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)

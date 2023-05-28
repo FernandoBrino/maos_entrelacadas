@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateEventDto } from 'src/events/dtos/CreateEvent.dto';
 import { SignupUserEventProps } from 'src/events/types/SignupUserEvent';
 import { User } from 'src/typeorm';
 import { Event } from 'src/typeorm/Event';
+import { UserEvent } from 'src/typeorm/UserEvent';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -12,10 +13,12 @@ export class EventsService {
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEvent)
+    private readonly userEventRepository: Repository<UserEvent>,
   ) {}
 
   getEvents() {
-    return this.eventRepository.find({ relations: { users: true } });
+    return this.eventRepository.find({ relations: { userEvents: true } });
   }
 
   createEvent(eventDto: CreateEventDto) {
@@ -25,33 +28,15 @@ export class EventsService {
   }
 
   async signupUserEvent({ userId, eventId }: SignupUserEventProps) {
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+    const user = this.userRepository.findOne({ where: { id: userId } });
+    const event = this.eventRepository.findOne({ where: { id: eventId } });
 
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new NotFoundException('User not found');
     }
-
-    const event = await this.eventRepository.findOne({
-      relations: {
-        users: true,
-      },
-      where: { id: eventId },
-    });
 
     if (!event) {
-      throw new BadRequestException('Event not found');
+      throw new NotFoundException('Event not found');
     }
-
-    const userAlreadySignedToEvent = event.users.find(
-      (user) => user.id == userId,
-    );
-
-    if (userAlreadySignedToEvent) {
-      throw new BadRequestException('User already registered to this event!');
-    }
-
-    event.users = [...event.users, user];
-
-    return await this.eventRepository.save(event);
   }
 }

@@ -7,7 +7,6 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
-import { User } from '../../../typeorm/User';
 import { CreatePersonDto } from './CreatePerson.dto';
 import { Type } from 'class-transformer';
 import { ImageDto } from 'src/dtos/ImageDto';

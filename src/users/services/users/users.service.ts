@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AwsS3Service } from 'src/shared/services/aws-s3.service';
@@ -28,6 +32,10 @@ export class UsersService {
 
   getUsers() {
     return this.userRepository.find();
+  }
+
+  getSignupEventsByUser(id: number) {
+    return;
   }
 
   async createUser(userProps: CreateUserDto) {
@@ -84,14 +92,14 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
-      throw new Error("User doesn't exists!");
+      throw new NotFoundException('User not found!');
     }
 
     if (
       updateUserDto.image &&
       !this.validatorService.isImage(updateUserDto.image.url)
     ) {
-      throw new Error('Invalid image!');
+      throw new BadRequestException('Invalid image!');
     }
 
     const updatedUser = this.userRepository.create({

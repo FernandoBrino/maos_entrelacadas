@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GendersModule } from './genders/genders.module';
 import { EventsModule } from './events/events.module';
 import { SharedModule } from './shared/shared.module';
+import { AnnouncementsModule } from './announcements/announcements.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
     GendersModule,
     EventsModule,
     SharedModule,
+    AnnouncementsModule,
   ],
   controllers: [],
   providers: [],

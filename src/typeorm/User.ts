@@ -3,14 +3,13 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Image } from './Image';
 import { Person } from './Person';
-import { Event } from './Event';
+import { UserEvent } from './UserEvent';
 
 @Entity('users')
 export class User {
@@ -51,6 +50,9 @@ export class User {
   @OneToOne(() => Image, { eager: true })
   @JoinColumn()
   image: Image;
+
+  @OneToMany(() => UserEvent, (userEvent) => userEvent.user)
+  userEvents: UserEvent[];
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
