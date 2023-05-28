@@ -7,7 +7,16 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AwsS3Service } from 'src/shared/services/aws-s3.service';
 import { ValidatorService } from 'src/shared/services/validator.service';
-import { Address, Gender, Image, Person, User } from 'src/typeorm';
+import {
+  Address,
+  Event,
+  Gender,
+  Image,
+  Person,
+  User,
+  UserEvent,
+} from 'src/typeorm';
+
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
 import { encodePassword } from 'src/utils/bcrypt';
@@ -25,6 +34,10 @@ export class UsersService {
     private readonly imageRepository: Repository<Image>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
+    @InjectRepository(Event)
+    private readonly eventRepository: Repository<Event>,
+    @InjectRepository(UserEvent)
+    private readonly userEventRepository: Repository<UserEvent>,
     private jwtService: JwtService,
     private validatorService: ValidatorService,
     private awsS3Service: AwsS3Service,
@@ -34,8 +47,21 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  getSignupEventsByUser(id: number) {
-    return;
+  async getSignupEventsByUser(id: number) {
+    const user = await this.findUserById(id);
+
+    const eventsSignupByUser = user.userEvents.map((event) => {
+      return event.eventId;
+    });
+
+    const event = Promise.all(
+      eventsSignupByUser.map(
+        async (eventId) =>
+          await this.eventRepository.find({ where: { id: eventId } }),
+      ),
+    );
+
+    return event;
   }
 
   async createUser(userProps: CreateUserDto) {
@@ -89,11 +115,7 @@ export class UsersService {
   }
 
   async updateUser(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepository.findOne({ where: { id } });
-
-    if (!user) {
-      throw new NotFoundException('User not found!');
-    }
+    const user = await this.findUserById(id);
 
     if (
       updateUserDto.image &&
@@ -139,6 +161,16 @@ export class UsersService {
     await this.userRepository.update(id, updatedUser);
 
     return updatedUser;
+  }
+
+  async findUserById(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return user;
   }
 
   findUserByUsername(username: string) {

@@ -5,10 +5,19 @@ import { UsersService } from './services/users/users.service';
 import { Address, Gender, Image, Person, User } from 'src/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { UserEvent } from 'src/typeorm/UserEvent';
+import { Event } from 'src/typeorm/Event';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Person, Gender, Address, Image, UserEvent]),
+    TypeOrmModule.forFeature([
+      User,
+      Person,
+      Gender,
+      Address,
+      Image,
+      Event,
+      UserEvent,
+    ]),
     JwtModule.register({
       secret: process.env.NEST_SECRET_KEY,
       signOptions: { expiresIn: '600s' },

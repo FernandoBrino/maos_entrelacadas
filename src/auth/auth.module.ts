@@ -11,11 +11,21 @@ import { JwtModule } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
 import { ConfigModule } from '@nestjs/config';
 import { Address, Gender, Image, Person } from 'src/typeorm';
+import { UserEvent } from 'src/typeorm/UserEvent';
+import { Event } from 'src/typeorm/Event';
 dotenv.config();
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Person, Gender, Image, Address]),
+    TypeOrmModule.forFeature([
+      User,
+      Person,
+      Gender,
+      Image,
+      Address,
+      Event,
+      UserEvent,
+    ]),
     PassportModule,
     JwtModule.register({
       secret: process.env.NEST_SECRET_KEY,

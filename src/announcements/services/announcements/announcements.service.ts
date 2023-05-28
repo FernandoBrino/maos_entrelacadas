@@ -21,7 +21,7 @@ export class AnnouncementsService {
     });
 
     if (!announcement) {
-      throw new NotFoundException('Announcement não encontrado');
+      throw new NotFoundException('Announcement not found');
     }
 
     return announcement;
