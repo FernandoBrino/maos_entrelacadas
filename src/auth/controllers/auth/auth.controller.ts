@@ -7,10 +7,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth/local-auth.guard';
 import { AuthService } from 'src/auth/services/auth/auth.service';
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
   constructor(
     @Inject('AUTH_SERVICE') private readonly authService: AuthService,

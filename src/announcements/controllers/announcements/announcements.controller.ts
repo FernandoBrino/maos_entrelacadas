@@ -7,10 +7,12 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateAnnouncementDto } from 'src/announcements/dtos/CreateAnnouncement.dto';
 import { AnnouncementsService } from 'src/announcements/services/announcements/announcements.service';
 
 @Controller('announcements')
+@ApiTags('announcements')
 export class AnnouncementsController {
   constructor(
     @Inject('ANNOUNCEMENTS_SERVICE')
