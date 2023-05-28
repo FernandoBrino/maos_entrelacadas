@@ -20,7 +20,7 @@ import {
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
 import { encodePassword } from 'src/utils/bcrypt';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -49,19 +49,16 @@ export class UsersService {
 
   async getSignupEventsByUser(id: number) {
     const user = await this.findUserById(id);
+    const eventIds = user.userEvents.map((userEvent) => userEvent.eventId);
 
-    const eventsSignupByUser = user.userEvents.map((event) => {
-      return event.eventId;
+    const events = await this.eventRepository.find({
+      where: {
+        id: In(eventIds),
+      },
+      relations: ['images'],
     });
 
-    const event = Promise.all(
-      eventsSignupByUser.map(
-        async (eventId) =>
-          await this.eventRepository.find({ where: { id: eventId } }),
-      ),
-    );
-
-    return event;
+    return events;
   }
 
   async createUser(userProps: CreateUserDto) {
