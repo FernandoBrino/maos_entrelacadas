@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -26,6 +27,11 @@ export class EventsController {
     return this.eventsService.getEvents();
   }
 
+  @Get(':id')
+  getEventById(@Param('id', ParseIntPipe) id: number) {
+    return this.eventsService.getEventById(id);
+  }
+
   @Post('create')
   @UsePipes(ValidationPipe)
   createEvent(@Body() eventDto: CreateEventDto) {
@@ -38,5 +44,10 @@ export class EventsController {
     @Param('eventId', ParseIntPipe) eventId: number,
   ) {
     return this.eventsService.signupUserEvent({ userId, eventId });
+  }
+
+  @Delete(':id')
+  deleteEvent(@Param('id', ParseIntPipe) id: number) {
+    return this.eventsService.deleteEvent(id);
   }
 }

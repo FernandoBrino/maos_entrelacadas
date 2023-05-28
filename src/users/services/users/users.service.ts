@@ -141,6 +141,16 @@ export class UsersService {
     return updatedUser;
   }
 
+  async deleteUser(id: number): Promise<void> {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    await this.userRepository.remove(user);
+  }
+
   findUserByUsername(username: string) {
     return this.userRepository.findOne({ where: { username } });
   }

@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -27,5 +29,10 @@ export class GendersController {
   @UsePipes(ValidationPipe)
   createGender(@Body() genderDto: CreateGenderDto) {
     return this.gendersService.createGender(genderDto);
+  }
+
+  @Delete(':id')
+  deleteGender(@Param('id') id: number) {
+    return this.gendersService.deleteGender(id);
   }
 }

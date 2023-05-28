@@ -21,6 +21,19 @@ export class EventsService {
     return this.eventRepository.find({ relations: { userEvents: true } });
   }
 
+  async getEventById(id: number): Promise<Event> {
+    const event = await this.eventRepository.findOne({
+      where: { id },
+      relations: { userEvents: true },
+    });
+
+    if (!event) {
+      throw new NotFoundException('Event not found');
+    }
+
+    return event;
+  }
+
   createEvent(eventDto: CreateEventDto) {
     const newEvent = this.eventRepository.create({ ...eventDto });
 
@@ -56,5 +69,11 @@ export class EventsService {
     await this.userEventRepository.save(signupUserToEvent);
 
     return event;
+  }
+
+  async deleteEvent(id: number): Promise<void> {
+    const event = await this.getEventById(id);
+
+    await this.eventRepository.remove(event);
   }
 }
