@@ -10,10 +10,12 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateEventDto } from 'src/events/dtos/CreateEvent.dto';
 import { EventsService } from 'src/events/services/events/events.service';
 
 @Controller('events')
+@ApiTags('events')
 export class EventsController {
   constructor(
     @Inject('EVENTS_SERVICE') private readonly eventsService: EventsService,

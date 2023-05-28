@@ -21,7 +21,7 @@ export class Announcement {
   @Column('text', { nullable: true, array: true })
   tags: string[];
 
-  @OneToMany(() => Image, (image) => image.event)
+  @OneToMany(() => Image, (image) => image.event, { eager: true })
   @JoinColumn()
   images: Image[];
 
