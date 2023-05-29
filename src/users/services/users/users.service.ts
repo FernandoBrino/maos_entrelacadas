@@ -7,15 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AwsS3Service } from 'src/shared/services/aws-s3.service';
 import { ValidatorService } from 'src/shared/services/validator.service';
-import {
-  Address,
-  Event,
-  Gender,
-  Image,
-  Person,
-  User,
-  UserEvent,
-} from 'src/typeorm';
+import { Address, Event, Gender, Image, Person, User } from 'src/typeorm';
 
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
@@ -36,8 +28,6 @@ export class UsersService {
     private readonly addressRepository: Repository<Address>,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
-    @InjectRepository(UserEvent)
-    private readonly userEventRepository: Repository<UserEvent>,
     private jwtService: JwtService,
     private validatorService: ValidatorService,
     private awsS3Service: AwsS3Service,
@@ -68,9 +58,11 @@ export class UsersService {
     const emailAlreadyTaken = await this.findUserByEmail(userProps.email);
 
     if (usernameAlreadyExists) {
-      throw new BadRequestException('Username already taken!');
-    } else if (emailAlreadyTaken) {
-      throw new BadRequestException('Email already taken!');
+      throw new BadRequestException('Username already taken');
+    }
+
+    if (emailAlreadyTaken) {
+      throw new BadRequestException('Email already taken');
     }
 
     const password = encodePassword(userProps.password);
