@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateEventDto } from 'src/events/dtos/CreateEvent.dto';
 import { SignupUserEventProps } from 'src/events/types/SignupUserEvent';
-import { User } from 'src/typeorm';
+import { Image, User } from 'src/typeorm';
 import { Event } from 'src/typeorm/Event';
 import { UserEvent } from 'src/typeorm/UserEvent';
 import { Repository } from 'typeorm';
@@ -15,6 +15,8 @@ export class EventsService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(UserEvent)
     private readonly userEventRepository: Repository<UserEvent>,
+    @InjectRepository(Image)
+    private readonly imageRepository: Repository<Image>,
   ) {}
 
   getEvents() {
@@ -34,8 +36,15 @@ export class EventsService {
     return event;
   }
 
-  createEvent(eventDto: CreateEventDto) {
+  async createEvent(eventDto: CreateEventDto) {
     const newEvent = this.eventRepository.create({ ...eventDto });
+
+    if (eventDto.images) {
+      const newImages = this.imageRepository.create(eventDto.images);
+
+      newEvent.images = newImages;
+      await this.imageRepository.save(newImages);
+    }
 
     return this.eventRepository.save(newEvent);
   }
