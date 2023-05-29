@@ -35,7 +35,9 @@ export class UsersService {
   ) {}
 
   getUsers(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: { person: false, userEvents: false, image: true },
+    });
   }
 
   async getSignupEventsByUser(id: number): Promise<Event[]> {
@@ -46,7 +48,7 @@ export class UsersService {
       where: {
         id: In(eventIds),
       },
-      relations: ['images'],
+      relations: { images: true, userEvents: false },
     });
 
     return events;
@@ -153,14 +155,14 @@ export class UsersService {
     return updatedUser;
   }
 
-  async findUserById(id: number): Promise<User> {
+  async deleteUser(id: number): Promise<void> {
     const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException('User not found');
     }
 
-    return user;
+    await this.userRepository.remove(user);
   }
 
   async findUserByGoogleId(googleId: string): Promise<User | null> {
@@ -172,21 +174,24 @@ export class UsersService {
     return this.userRepository.findOne({ where: { facebookId } });
   }
 
-  async findUserByUsername(username: string): Promise<User> {
+  async findUserById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { person: true, userEvents: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return user;
+  }
+
+  findUserByUsername(username: string): Promise<User> {
     return this.userRepository.findOne({ where: { username } });
   }
 
-  async findUserByEmail(email: string): Promise<User> {
+  findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
-  }
-
-  async deleteUser(id: number): Promise<void> {
-    const user = await this.userRepository.findOne({ where: { id } });
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    await this.userRepository.remove(user);
   }
 }

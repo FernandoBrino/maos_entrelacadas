@@ -20,7 +20,9 @@ export class EventsService {
   ) {}
 
   getEvents(): Promise<Event[]> {
-    return this.eventRepository.find({ relations: { userEvents: true } });
+    return this.eventRepository.find({
+      relations: { userEvents: false, images: true },
+    });
   }
 
   async getEventById(id: number): Promise<Event> {
@@ -55,9 +57,11 @@ export class EventsService {
   }: SignupUserEventProps): Promise<Event> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
+      relations: { userEvents: true },
     });
     const event = await this.eventRepository.findOne({
       where: { id: eventId },
+      relations: { userEvents: true },
     });
 
     if (!user) {
@@ -77,7 +81,7 @@ export class EventsService {
     event.userEvents = [...event.userEvents, signupUserToEvent];
 
     await this.userRepository.save(user);
-    await this.eventRepository.save(user);
+    await this.eventRepository.save(event);
     await this.userEventRepository.save(signupUserToEvent);
 
     return event;
