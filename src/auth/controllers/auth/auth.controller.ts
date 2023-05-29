@@ -1,12 +1,10 @@
 import {
   ClassSerializerInterceptor,
   Controller,
-  Get,
   Inject,
+  Param,
   Post,
-  Req,
   Request,
-  Res,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -15,7 +13,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { GoogleAuthGuard } from 'src/auth/guards/google-auth/google-auth.guard';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth/local-auth.guard';
 import { AuthService } from 'src/auth/services/auth/auth.service';
-import { UsersService } from 'src/users/services/users/users.service';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -31,8 +28,8 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
-  @Post('google/login')
-  async googleAuth(@Req() req) {
-    return this.authService.findOrCreateUserFromGoogle(req.body);
+  @Post('google/login/:id')
+  async googleAuth(@Param('id') id: string) {
+    return this.authService.findOrCreateUserFromGoogle(id);
   }
 }

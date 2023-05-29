@@ -35,13 +35,12 @@ export class AuthService {
     };
   }
 
-  async findOrCreateUserFromGoogle(
-    profile: GoogleProfile,
-  ): Promise<Login | GoogleProfile> {
-    const user = await this.usersService.findUserByGoogleId(profile.id);
+  async findOrCreateUserFromGoogle(googleId: string): Promise<Login | any> {
+    console.log(googleId);
+    const user = await this.usersService.findUserByGoogleId(googleId);
 
     if (user) return await this.login(user);
 
-    return profile;
+    return { message: 'User not found' };
   }
 }

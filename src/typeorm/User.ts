@@ -34,7 +34,7 @@ export class User {
   @Column({ default: 'Voluntário' })
   status: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   cellphone: string;
 
   @Column({ name: 'created_at', default: new Date() })
