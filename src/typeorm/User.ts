@@ -43,15 +43,15 @@ export class User {
   @Column({ name: 'updated_at', default: new Date() })
   updatedAt: Date;
 
-  @OneToOne(() => Person, { eager: true })
+  @OneToOne(() => Person)
   @JoinColumn()
   person: Person;
 
-  @OneToOne(() => Image, { eager: true })
+  @OneToOne(() => Image)
   @JoinColumn()
   image: Image;
 
-  @OneToMany(() => UserEvent, (userEvent) => userEvent.user, { eager: true })
+  @OneToMany(() => UserEvent, (userEvent) => userEvent.user)
   userEvents: UserEvent[];
 
   constructor(partial: Partial<User>) {

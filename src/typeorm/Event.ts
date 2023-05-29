@@ -31,6 +31,6 @@ export class Event {
   @OneToMany(() => Image, (image) => image.event)
   images: Image[];
 
-  @OneToMany(() => UserEvent, (userEvent) => userEvent.event, { eager: true })
+  @OneToMany(() => UserEvent, (userEvent) => userEvent.event)
   userEvents: UserEvent[];
 }
