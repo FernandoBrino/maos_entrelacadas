@@ -11,11 +11,11 @@ export class GendersService {
     private readonly genderRepository: Repository<Gender>,
   ) {}
 
-  getGenders() {
+  getGenders(): Promise<Gender[]> {
     return this.genderRepository.find();
   }
 
-  createGender(name: GenderProps) {
+  createGender(name: GenderProps): Promise<Gender> {
     const newGender = this.genderRepository.create(name);
 
     return this.genderRepository.save(newGender);

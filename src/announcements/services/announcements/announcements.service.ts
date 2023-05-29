@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAnnouncementDto } from 'src/announcements/dtos/CreateAnnouncement.dto';
+import { Image } from 'src/typeorm';
 import { Announcement } from 'src/typeorm/Announcement';
 import { Repository } from 'typeorm';
 
@@ -9,9 +10,11 @@ export class AnnouncementsService {
   constructor(
     @InjectRepository(Announcement)
     private readonly announcementRepository: Repository<Announcement>,
+    @InjectRepository(Image)
+    private readonly imageRepository: Repository<Image>,
   ) {}
 
-  async getAnnouncements() {
+  async getAnnouncements(): Promise<Announcement[]> {
     return this.announcementRepository.find();
   }
 
@@ -27,10 +30,19 @@ export class AnnouncementsService {
     return announcement;
   }
 
-  async createAnnoucement(announcementDto: CreateAnnouncementDto) {
+  async createAnnoucement(
+    announcementDto: CreateAnnouncementDto,
+  ): Promise<Announcement> {
     const newAnnouncement = this.announcementRepository.create({
       ...announcementDto,
     });
+
+    if (announcementDto.images) {
+      const newImages = this.imageRepository.create(announcementDto.images);
+
+      newAnnouncement.images = newImages;
+      await this.imageRepository.save(newImages);
+    }
 
     return await this.announcementRepository.save(newAnnouncement);
   }

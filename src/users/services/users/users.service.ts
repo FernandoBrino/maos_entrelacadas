@@ -7,18 +7,11 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AwsS3Service } from 'src/shared/services/aws-s3.service';
 import { ValidatorService } from 'src/shared/services/validator.service';
-import {
-  Address,
-  Event,
-  Gender,
-  Image,
-  Person,
-  User,
-  UserEvent,
-} from 'src/typeorm';
+import { Address, Event, Gender, Image, Person, User } from 'src/typeorm';
 
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
+import { CreateUserType } from 'src/users/types/CreateUser';
 import { encodePassword } from 'src/utils/bcrypt';
 import { In, Repository } from 'typeorm';
 
@@ -36,18 +29,16 @@ export class UsersService {
     private readonly addressRepository: Repository<Address>,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
-    @InjectRepository(UserEvent)
-    private readonly userEventRepository: Repository<UserEvent>,
     private jwtService: JwtService,
     private validatorService: ValidatorService,
     private awsS3Service: AwsS3Service,
   ) {}
 
-  async getUsers() {
+  getUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  async getSignupEventsByUser(id: number) {
+  async getSignupEventsByUser(id: number): Promise<Event[]> {
     const user = await this.findUserById(id);
     const eventIds = user.userEvents.map((userEvent) => userEvent.eventId);
 
@@ -61,16 +52,18 @@ export class UsersService {
     return events;
   }
 
-  async createUser(userProps: CreateUserDto) {
+  async createUser(userProps: CreateUserDto): Promise<CreateUserType> {
     const usernameAlreadyExists = await this.findUserByUsername(
       userProps.username,
     );
     const emailAlreadyTaken = await this.findUserByEmail(userProps.email);
 
     if (usernameAlreadyExists) {
-      throw new BadRequestException('Username already taken!');
-    } else if (emailAlreadyTaken) {
-      throw new BadRequestException('Email already taken!');
+      throw new BadRequestException('Username already taken');
+    }
+
+    if (emailAlreadyTaken) {
+      throw new BadRequestException('Email already taken');
     }
 
     const password = encodePassword(userProps.password);
@@ -111,7 +104,7 @@ export class UsersService {
     };
   }
 
-  async updateUser(id: number, updateUserDto: UpdateUserDto) {
+  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findUserById(id);
 
     if (
@@ -160,7 +153,7 @@ export class UsersService {
     return updatedUser;
   }
 
-  async findUserById(id: number) {
+  async findUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
@@ -178,11 +171,11 @@ export class UsersService {
     return this.userRepository.findOne({ where: { facebookId } });
   }
 
-  async findUserByUsername(username: string) {
+  async findUserByUsername(username: string): Promise<User> {
     return this.userRepository.findOne({ where: { username } });
   }
 
-  async findUserByEmail(email: string) {
+  async findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
   }
 

@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Event } from './Event';
+import { Announcement } from './Announcement';
 
 @Entity('images')
 export class Image {
@@ -19,4 +20,7 @@ export class Image {
 
   @ManyToOne(() => Event, (event) => event.images)
   event: Event;
+
+  @ManyToOne(() => Announcement, (announcement) => announcement.images)
+  announcement: Announcement;
 }
