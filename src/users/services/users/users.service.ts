@@ -11,6 +11,7 @@ import { Address, Event, Gender, Image, Person, User } from 'src/typeorm';
 
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
+import { CreateUserType } from 'src/users/types/CreateUser';
 import { encodePassword } from 'src/utils/bcrypt';
 import { In, Repository } from 'typeorm';
 
@@ -33,11 +34,11 @@ export class UsersService {
     private awsS3Service: AwsS3Service,
   ) {}
 
-  getUsers() {
+  getUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  async getSignupEventsByUser(id: number) {
+  async getSignupEventsByUser(id: number): Promise<Event[]> {
     const user = await this.findUserById(id);
     const eventIds = user.userEvents.map((userEvent) => userEvent.eventId);
 
@@ -51,7 +52,7 @@ export class UsersService {
     return events;
   }
 
-  async createUser(userProps: CreateUserDto) {
+  async createUser(userProps: CreateUserDto): Promise<CreateUserType> {
     const usernameAlreadyExists = await this.findUserByUsername(
       userProps.username,
     );
@@ -103,7 +104,7 @@ export class UsersService {
     };
   }
 
-  async updateUser(id: number, updateUserDto: UpdateUserDto) {
+  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findUserById(id);
 
     if (
@@ -152,7 +153,7 @@ export class UsersService {
     return updatedUser;
   }
 
-  async findUserById(id: number) {
+  async findUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
@@ -172,11 +173,11 @@ export class UsersService {
     await this.userRepository.remove(user);
   }
 
-  findUserByUsername(username: string) {
+  findUserByUsername(username: string): Promise<User> {
     return this.userRepository.findOne({ where: { username } });
   }
 
-  findUserByEmail(email: string) {
+  findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
   }
 }

@@ -19,7 +19,7 @@ export class EventsService {
     private readonly imageRepository: Repository<Image>,
   ) {}
 
-  getEvents() {
+  getEvents(): Promise<Event[]> {
     return this.eventRepository.find({ relations: { userEvents: true } });
   }
 
@@ -36,7 +36,7 @@ export class EventsService {
     return event;
   }
 
-  async createEvent(eventDto: CreateEventDto) {
+  async createEvent(eventDto: CreateEventDto): Promise<Event> {
     const newEvent = this.eventRepository.create({ ...eventDto });
 
     if (eventDto.images) {
@@ -49,7 +49,10 @@ export class EventsService {
     return this.eventRepository.save(newEvent);
   }
 
-  async signupUserEvent({ userId, eventId }: SignupUserEventProps) {
+  async signupUserEvent({
+    userId,
+    eventId,
+  }: SignupUserEventProps): Promise<Event> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
     });

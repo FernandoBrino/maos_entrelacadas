@@ -14,7 +14,7 @@ export class AnnouncementsService {
     private readonly imageRepository: Repository<Image>,
   ) {}
 
-  async getAnnouncements() {
+  async getAnnouncements(): Promise<Announcement[]> {
     return this.announcementRepository.find();
   }
 
@@ -30,7 +30,9 @@ export class AnnouncementsService {
     return announcement;
   }
 
-  async createAnnoucement(announcementDto: CreateAnnouncementDto) {
+  async createAnnoucement(
+    announcementDto: CreateAnnouncementDto,
+  ): Promise<Announcement> {
     const newAnnouncement = this.announcementRepository.create({
       ...announcementDto,
     });
