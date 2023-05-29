@@ -34,7 +34,7 @@ export class User {
   @Column({ default: 'Voluntário' })
   status: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   cellphone: string;
 
   @Column({ name: 'created_at', default: new Date() })
@@ -43,7 +43,13 @@ export class User {
   @Column({ name: 'updated_at', default: new Date() })
   updatedAt: Date;
 
-  @OneToOne(() => Person)
+  @Column({ name: 'google_id', nullable: true })
+  googleId: string;
+
+  @Column({ name: 'facebook_id', nullable: true })
+  facebookId: string;
+
+  @OneToOne(() => Person, { eager: true })
   @JoinColumn()
   person: Person;
 

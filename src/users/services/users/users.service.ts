@@ -165,6 +165,15 @@ export class UsersService {
     await this.userRepository.remove(user);
   }
 
+  async findUserByGoogleId(googleId: string): Promise<User | null> {
+    if (googleId) return this.userRepository.findOne({ where: { googleId } });
+    return null;
+  }
+
+  async findUserByFacebookId(facebookId: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { facebookId } });
+  }
+
   async findUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
