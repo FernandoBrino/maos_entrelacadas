@@ -43,7 +43,7 @@ export class UsersService {
     private awsS3Service: AwsS3Service,
   ) {}
 
-  getUsers() {
+  async getUsers() {
     return this.userRepository.find();
   }
 
@@ -170,6 +170,22 @@ export class UsersService {
     return user;
   }
 
+  async findUserByGoogleId(googleId: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { googleId } });
+  }
+
+  async findUserByFacebookId(facebookId: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { facebookId } });
+  }
+
+  async findUserByUsername(username: string) {
+    return this.userRepository.findOne({ where: { username } });
+  }
+
+  async findUserByEmail(email: string) {
+    return this.userRepository.findOne({ where: { email } });
+  }
+
   async deleteUser(id: number): Promise<void> {
     const user = await this.userRepository.findOne({ where: { id } });
 
@@ -178,13 +194,5 @@ export class UsersService {
     }
 
     await this.userRepository.remove(user);
-  }
-
-  findUserByUsername(username: string) {
-    return this.userRepository.findOne({ where: { username } });
-  }
-
-  findUserByEmail(email: string) {
-    return this.userRepository.findOne({ where: { email } });
   }
 }

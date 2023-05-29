@@ -43,6 +43,12 @@ export class User {
   @Column({ name: 'updated_at', default: new Date() })
   updatedAt: Date;
 
+  @Column({ name: 'google_id', nullable: true })
+  googleId: string;
+
+  @Column({ name: 'facebook_id', nullable: true })
+  facebookId: string;
+
   @OneToOne(() => Person, { eager: true })
   @JoinColumn()
   person: Person;

@@ -33,4 +33,12 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  async findOrCreateUserFromGoogle(profile: GoogleProfile): Promise<User> {
+    const user = this.usersService.findUserByGoogleId(profile.id);
+    if (user) return user;
+
+    // const newUser = await this.usersService.createUser({});
+    return null;
+  }
 }
