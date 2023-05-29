@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Address, Gender, Image, Person } from 'src/typeorm';
 import { UserEvent } from 'src/typeorm/UserEvent';
 import { Event } from 'src/typeorm/Event';
-import { GoogleStrategy } from './passportStrategies/google.strategy';
+
 dotenv.config();
 
 @Module({
@@ -46,7 +46,6 @@ dotenv.config();
     },
     JwtStrategy,
     LocalStrategy,
-    GoogleStrategy,
   ],
 })
 export class AuthModule {}

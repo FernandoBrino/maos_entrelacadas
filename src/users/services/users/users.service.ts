@@ -163,8 +163,9 @@ export class UsersService {
     return user;
   }
 
-  async findUserByGoogleId(googleId: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { googleId } });
+  async findUserByGoogleId(googleId: string): Promise<User | null> {
+    if (googleId) return this.userRepository.findOne({ where: { googleId } });
+    return null;
   }
 
   async findUserByFacebookId(facebookId: string): Promise<User | undefined> {
