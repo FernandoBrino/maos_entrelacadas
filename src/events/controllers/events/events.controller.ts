@@ -22,14 +22,17 @@ export class EventsController {
     @Inject('EVENTS_SERVICE') private readonly eventsService: EventsService,
   ) {}
 
-  @Get('')
-  getEvents() {
-    return this.eventsService.getEvents();
+  @Get('/:userId')
+  getEvents(@Param('userId', ParseIntPipe) id: number) {
+    return this.eventsService.getEvents(id);
   }
 
-  @Get(':id')
-  getEventById(@Param('id', ParseIntPipe) id: number) {
-    return this.eventsService.getEventById(id);
+  @Get('/:userId/:eventId')
+  getEventById(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('eventId', ParseIntPipe) eventId: number,
+  ) {
+    return this.eventsService.getEventById(eventId, userId);
   }
 
   @Post('create')

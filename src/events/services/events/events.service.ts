@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateEventDto } from 'src/events/dtos/CreateEvent.dto';
+import { EventWithSignupDto } from 'src/events/dtos/EventWithSignup.dto';
 import { SignupUserEventProps } from 'src/events/types/SignupUserEvent';
 import { Image, User } from 'src/typeorm';
 import { Event } from 'src/typeorm/Event';
 import { UserEvent } from 'src/typeorm/UserEvent';
+import { eventSignup, eventsSignup } from 'src/utils/signUpEvents';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -19,23 +21,25 @@ export class EventsService {
     private readonly imageRepository: Repository<Image>,
   ) {}
 
-  getEvents(): Promise<Event[]> {
-    return this.eventRepository.find({
-      relations: { userEvents: false, images: true },
+  async getEvents(userId: number): Promise<EventWithSignupDto[]> {
+    const events = await this.eventRepository.find({
+      relations: { userEvents: true, images: true },
     });
+
+    return eventsSignup(events, userId);
   }
 
-  async getEventById(id: number): Promise<Event> {
+  async getEventById(id: number, userId?: number): Promise<Event> {
     const event = await this.eventRepository.findOne({
       where: { id },
-      relations: { userEvents: false, images: true },
+      relations: { userEvents: true, images: true },
     });
 
     if (!event) {
       throw new NotFoundException('Event not found');
     }
 
-    return event;
+    return eventSignup(event, userId);
   }
 
   async createEvent(eventDto: CreateEventDto): Promise<Event> {
