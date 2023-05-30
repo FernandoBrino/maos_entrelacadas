@@ -28,7 +28,7 @@ export class EventsService {
   async getEventById(id: number): Promise<Event> {
     const event = await this.eventRepository.findOne({
       where: { id },
-      relations: { userEvents: true },
+      relations: { userEvents: false, images: true },
     });
 
     if (!event) {
