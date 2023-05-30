@@ -36,7 +36,6 @@ export class AuthService {
   }
 
   async findOrCreateUserFromGoogle(googleId: string): Promise<Login | any> {
-    console.log(googleId);
     const user = await this.usersService.findUserByGoogleId(googleId);
 
     if (user) return await this.login(user);

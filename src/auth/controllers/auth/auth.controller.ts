@@ -8,9 +8,9 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+
 import { ApiTags } from '@nestjs/swagger';
-import { GoogleAuthGuard } from 'src/auth/guards/google-auth/google-auth.guard';
+
 import { LocalAuthGuard } from 'src/auth/guards/local-auth/local-auth.guard';
 import { AuthService } from 'src/auth/services/auth/auth.service';
 
