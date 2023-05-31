@@ -54,11 +54,11 @@ export class EventsController {
     @Param('eventId', ParseIntPipe) eventId: number,
     @Param('userId', ParseIntPipe) userId: number,
   ) {
-    this.eventsService.removeUserFromEvent(userId, eventId);
+    return this.eventsService.removeUserFromEvent(userId, eventId);
   }
 
   @Delete(':id')
   deleteEvent(@Param('id', ParseIntPipe) id: number) {
-    this.eventsService.deleteEvent(id);
+    return this.eventsService.deleteEvent(id);
   }
 }
