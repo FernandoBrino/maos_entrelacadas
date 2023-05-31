@@ -192,6 +192,9 @@ export class UsersService {
   }
 
   findUserByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({
+      where: { email },
+      relations: { userEvents: false, image: true },
+    });
   }
 }
