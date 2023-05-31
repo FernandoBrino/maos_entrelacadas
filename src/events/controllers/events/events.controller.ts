@@ -49,8 +49,16 @@ export class EventsController {
     return this.eventsService.signupUserEvent({ userId, eventId });
   }
 
+  @Delete('signup/:userId/:eventId')
+  removeUserFromEvent(
+    @Param('eventId', ParseIntPipe) eventId: number,
+    @Param('userId', ParseIntPipe) userId: number,
+  ) {
+    this.eventsService.removeUserFromEvent(userId, eventId);
+  }
+
   @Delete(':id')
   deleteEvent(@Param('id', ParseIntPipe) id: number) {
-    return this.eventsService.deleteEvent(id);
+    this.eventsService.deleteEvent(id);
   }
 }

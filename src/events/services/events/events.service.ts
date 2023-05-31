@@ -91,6 +91,32 @@ export class EventsService {
     return event;
   }
 
+  async removeUserFromEvent(userId: number, eventId: number): Promise<void> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: { userEvents: true },
+    });
+    const event = await this.eventRepository.findOne({
+      where: { id: eventId },
+      relations: { userEvents: true },
+    });
+
+    if (!user || !event) {
+      throw new NotFoundException('User or Event not found');
+    }
+
+    const userEvent = event.userEvents.find(
+      (ue) => +ue.userId === +userId && +ue.eventId === +eventId,
+    );
+
+    if (userEvent) {
+      event.userEvents = event.userEvents.filter((ue) => ue !== userEvent);
+
+      await this.userEventRepository.remove(userEvent);
+      await this.eventRepository.save(event);
+    }
+  }
+
   async deleteEvent(id: number): Promise<void> {
     const event = await this.getEventById(id);
 
