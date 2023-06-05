@@ -8,6 +8,7 @@ import { GendersModule } from './genders/genders.module';
 import { EventsModule } from './events/events.module';
 import { SharedModule } from './shared/shared.module';
 import { AnnouncementsModule } from './announcements/announcements.module';
+import { DonationsModule } from './donations/donations.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AnnouncementsModule } from './announcements/announcements.module';
     EventsModule,
     SharedModule,
     AnnouncementsModule,
+    DonationsModule,
   ],
   controllers: [],
   providers: [],

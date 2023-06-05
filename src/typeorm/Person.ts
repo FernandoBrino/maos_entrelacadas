@@ -19,7 +19,7 @@ export class Person {
   @Column({ nullable: false })
   name: string;
 
-  @Column({ name: 'birth_date', nullable: false })
+  @Column({ name: 'birth_date', nullable: true })
   birthdate: Date;
 
   @Column({ name: 'created_at', default: new Date() })
@@ -28,7 +28,7 @@ export class Person {
   @Column({ name: 'updated_at', default: new Date() })
   updatedAt: Date;
 
-  @Column({ nullable: true, default: null })
+  @Column({ nullable: false, default: null })
   cpf: number;
 
   @OneToOne(() => Address, { eager: true })

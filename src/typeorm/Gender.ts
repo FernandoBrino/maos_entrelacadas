@@ -5,7 +5,7 @@ export class Gender {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   name: string;
 
   @Column({ name: 'created_at', default: new Date() })
