@@ -28,14 +28,14 @@ export class Person {
   @Column({ name: 'updated_at', default: new Date() })
   updatedAt: Date;
 
-  @Column({ nullable: false, default: null })
+  @Column({ nullable: true, default: null })
   cpf: number;
 
-  @OneToOne(() => Address, { eager: true })
+  @OneToOne(() => Address, { eager: true, nullable: true })
   @JoinColumn()
-  address: Address;
+  address: Address | null;
 
-  @ManyToOne(() => Gender, { eager: true })
+  @ManyToOne(() => Gender, { eager: true, nullable: true })
   @JoinColumn()
-  gender: Gender;
+  gender: Gender | null;
 }

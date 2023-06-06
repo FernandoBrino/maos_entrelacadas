@@ -6,6 +6,7 @@ import { Announcement } from 'src/typeorm/Announcement';
 import { UserEvent } from 'src/typeorm/UserEvent';
 import {
   announcementImagesMigration1685319235654,
+  fixUserMigration1686069709047,
   initialMigration1685293330636,
 } from './migrations';
 
@@ -31,6 +32,7 @@ export const dataSourceOptions: DataSourceOptions = {
   migrations: [
     initialMigration1685293330636,
     announcementImagesMigration1685319235654,
+    fixUserMigration1686069709047,
   ],
   ssl: { rejectUnauthorized: true },
   synchronize: false,

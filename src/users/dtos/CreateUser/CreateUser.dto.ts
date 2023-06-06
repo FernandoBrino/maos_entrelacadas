@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNotEmptyObject,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -29,14 +30,17 @@ export class CreateUserDto {
   @MaxLength(100)
   password: string;
 
+  @IsOptional()
   @IsString()
   @MaxLength(11)
   cellphone: string;
 
+  @IsOptional()
   @ValidateNested()
   @Type(() => ImageDto)
   image: ImageDto;
 
+  @IsOptional()
   @IsNotEmptyObject()
   @ValidateNested()
   @Type(() => CreatePersonDto)

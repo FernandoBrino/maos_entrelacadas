@@ -75,14 +75,6 @@ export class UsersService {
       password,
     });
 
-    const newPerson = this.personRepository.create({
-      ...userProps.person,
-    });
-
-    const newGender = await this.genderRepository.findOne({
-      where: { name: userProps.person.gender.name },
-    });
-
     if (userProps.image) {
       const newImage = this.imageRepository.create({
         ...userProps.image,
@@ -92,10 +84,21 @@ export class UsersService {
       await this.imageRepository.save(newImage);
     }
 
-    newUser.person = newPerson;
-    newUser.person.gender = newGender;
+    if (userProps.person) {
+      const newPerson = this.personRepository.create({
+        ...userProps.person,
+      });
 
-    await this.personRepository.save(newPerson);
+      const newGender = await this.genderRepository.findOne({
+        where: { name: userProps.person.gender.name },
+      });
+
+      newUser.person = newPerson;
+      newUser.person.gender = newGender;
+
+      await this.personRepository.save(newPerson);
+    }
+
     const user = await this.userRepository.save(newUser);
 
     const payload = { email: user.email, sub: user.id };

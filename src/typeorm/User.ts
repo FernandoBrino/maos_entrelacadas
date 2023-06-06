@@ -49,13 +49,13 @@ export class User {
   @Column({ name: 'facebook_id', nullable: true })
   facebookId: string;
 
-  @OneToOne(() => Person, { eager: true })
+  @OneToOne(() => Person, { eager: true, nullable: true })
   @JoinColumn()
-  person: Person;
+  person: Person | null;
 
-  @OneToOne(() => Image)
+  @OneToOne(() => Image, { nullable: true })
   @JoinColumn()
-  image: Image;
+  image: Image | null;
 
   @OneToMany(() => UserEvent, (userEvent) => userEvent.user)
   userEvents: UserEvent[];

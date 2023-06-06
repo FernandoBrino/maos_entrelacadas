@@ -3,10 +3,12 @@ import {
   Controller,
   Inject,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ChargeDto } from 'src/donations/dtos/Charge.dto';
+import { AwsGatewayGuard } from 'src/donations/guards/aws-gateway/aws-gateway.guard';
 import { DonationsService } from 'src/donations/services/donations/donations.service';
 
 @Controller('donations')
@@ -17,6 +19,7 @@ export class DonationsController {
   ) {}
 
   @Post('webhook')
+  @UseGuards(AwsGatewayGuard)
   checkoutPixStatus() {
     return { msg: 'funcionou' };
   }
