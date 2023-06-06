@@ -16,6 +16,11 @@ export class DonationsController {
     private readonly donationsService: DonationsService,
   ) {}
 
+  @Post('webhook')
+  checkoutPixStatus() {
+    return { msg: 'funcionou' };
+  }
+
   @Post('donate')
   @UsePipes(ValidationPipe)
   donateValue(@Body() chargeDto: ChargeDto) {

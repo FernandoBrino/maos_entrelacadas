@@ -60,8 +60,10 @@ export class DonationsService {
   getAdditionalDataFieldTemplate(): string {
     const txid = this.getValue({
       id: this.ID_ADDITIONAL_DATA_FIELD_TEMPLATE_TXID,
-      value: uuidv4().slice(0, 3),
+      value: uuidv4().replace(/-/g, '').slice(0, 20),
     });
+
+    console.log(txid);
 
     return this.getValue({
       id: this.ID_ADDITIONAL_DATA_FIELD_TEMPLATE,
