@@ -19,7 +19,7 @@ export class AwsGatewayGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
 
-    const { email, password } = req.body;
+    const { email, password } = req.headers;
 
     const awsUser = await this.userRepository.findOne({
       where: { email: 'aws-gateway-access@aws.com' },
