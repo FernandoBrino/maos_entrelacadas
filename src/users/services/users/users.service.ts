@@ -89,13 +89,15 @@ export class UsersService {
         ...userProps.person,
       });
 
-      const newGender = await this.genderRepository.findOne({
-        where: { name: userProps.person.gender.name },
-      });
+      if (userProps.person.gender) {
+        const newGender = await this.genderRepository.findOne({
+          where: { name: userProps.person.gender.name },
+        });
+
+        newUser.person.gender = newGender;
+      }
 
       newUser.person = newPerson;
-      newUser.person.gender = newGender;
-
       await this.personRepository.save(newPerson);
     }
 

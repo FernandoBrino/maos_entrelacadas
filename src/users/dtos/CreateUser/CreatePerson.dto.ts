@@ -14,10 +14,8 @@ export class CreatePersonDto {
   @IsString()
   name: string;
 
-  @IsNotEmpty()
   birthdate: Date;
 
-  @IsNotEmptyObject()
   @ValidateNested()
   @Type(() => CreateGenderDto)
   gender: CreateGenderDto;
