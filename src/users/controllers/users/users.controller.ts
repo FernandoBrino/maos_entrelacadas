@@ -15,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
+import { UpdateAvatarDto } from 'src/users/dtos/UpdateUser/UpdateAvatar.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
 import { UsersService } from 'src/users/services/users/users.service';
 
@@ -51,6 +52,15 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto
   ) {
     return this.usersService.updateUser(id, updateUserDto);
+  }
+
+  @Put('updateAvatar/:id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async updateAvatar(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() image: UpdateAvatarDto,
+  ) {
+    return this.usersService.updateAvatar(id, image);
   }
 
   @Delete('delete/:id')

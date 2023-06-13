@@ -3,15 +3,7 @@ import { S3 } from '@aws-sdk/client-s3';
 import mime from 'mime-types';
 import { GeneratorService } from './generator.service';
 import { ApiConfigService } from './api-config.service';
-
-interface IFile {
-  encoding: string;
-  buffer: Buffer;
-  fieldname: string;
-  mimetype: string;
-  originalname: string;
-  size: number;
-}
+import { UpdateAvatarDto } from 'src/users/dtos/UpdateUser/UpdateAvatar.dto';
 
 type Folder = 'Comunicado' | 'Evento' | 'Avatar';
 
@@ -27,23 +19,29 @@ export class AwsS3Service {
     const awsS3Config = configService.awsS3Config;
 
     this.s3 = new S3({
-      apiVersion: awsS3Config.bucketApiVersion,
+      // apiVersion: awsS3Config.bucketApiVersion,
       region: awsS3Config.bucketRegion,
     });
   }
 
-  async uploadImage(file: IFile, folder: Folder): Promise<string> {
-    const fileName = this.generatorService.fileName(
-      <string>mime.extension(file.mimetype),
-    );
+  async uploadImage(
+    { photoFile }: UpdateAvatarDto,
+    folder: Folder = 'Avatar',
+  ): Promise<string> {
+    const { name, ext } = photoFile;
+    const fileName = this.generatorService.fileName(name, ext);
+
+    const fileBuffer = Buffer.from(photoFile.uri, 'base64');
+
     const key = `images/${folder}/${fileName}`;
     await this.s3.putObject({
       Bucket: this.configService.awsS3Config.bucketName,
-      Body: file.buffer,
+      Body: fileBuffer,
       ACL: 'public-read',
       Key: key,
+      ContentType: `image/${ext}`,
     });
 
-    return key;
+    return `${this.configService.awsS3Config.s3Url}/images/${folder}/${fileName}`;
   }
 }

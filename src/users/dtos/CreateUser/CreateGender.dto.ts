@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEnum } from 'class-validator';
 
 enum Gender {
   HETEROSEXUAL = 'Heterossexual',
@@ -12,7 +12,6 @@ enum Gender {
 }
 
 export class CreateGenderDto {
-  @IsNotEmpty()
   @IsEnum(Gender)
   name: Gender;
 }
