@@ -14,8 +14,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   }
 });
 
-const endpointSecret =
-  'whsec_27369e05021a9f13868749b5653f064b35916ad19c651666a8e647948d9fa86b';
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
 @Injectable()
 export class DonationsService {
   async createPaymentIntent({ amount }: AmountDto) {
@@ -42,6 +42,30 @@ export class DonationsService {
     }
 
     switch (event.type) {
+      case 'payment_intent.amount_capturable_updated':
+        const paymentIntentAmountCapturableUpdated = event.data.object;
+        // Then define and call a function to handle the event payment_intent.amount_capturable_updated
+        return paymentIntentAmountCapturableUpdated;
+      case 'payment_intent.canceled':
+        const paymentIntentCanceled = event.data.object;
+        // Then define and call a function to handle the event payment_intent.canceled
+        return paymentIntentCanceled;
+      case 'payment_intent.partially_funded':
+        const paymentIntentPartiallyFunded = event.data.object;
+        // Then define and call a function to handle the event payment_intent.partially_funded
+        return paymentIntentPartiallyFunded;
+      case 'payment_intent.payment_failed':
+        const paymentIntentPaymentFailed = event.data.object;
+        // Then define and call a function to handle the event payment_intent.payment_failed
+        return paymentIntentPaymentFailed;
+      case 'payment_intent.processing':
+        const paymentIntentProcessing = event.data.object;
+        // Then define and call a function to handle the event payment_intent.processing
+        return paymentIntentProcessing;
+      case 'payment_intent.requires_action':
+        const paymentIntentRequiresAction = event.data.object;
+        // Then define and call a function to handle the event payment_intent.requires_action
+        return paymentIntentRequiresAction;
       case 'payment_intent.created':
         const paymentIntentCreated = event.data.object;
         // Then define and call a function to handle the event payment_intent.created
