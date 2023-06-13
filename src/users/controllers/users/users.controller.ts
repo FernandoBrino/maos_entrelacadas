@@ -11,7 +11,7 @@ import {
   Put,
   UseInterceptors,
   UsePipes,
-  ValidationPipe,
+  ValidationPipe
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
@@ -22,7 +22,7 @@ import { UsersService } from 'src/users/services/users/users.service';
 @ApiTags('users')
 export class UsersController {
   constructor(
-    @Inject('USERS_SERVICE') private readonly usersService: UsersService,
+    @Inject('USERS_SERVICE') private readonly usersService: UsersService
   ) {}
 
   @Get('')
@@ -48,7 +48,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   updateUser(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: UpdateUserDto
   ) {
     return this.usersService.updateUser(id, updateUserDto);
   }
