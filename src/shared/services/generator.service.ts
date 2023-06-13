@@ -7,7 +7,7 @@ export class GeneratorService {
     return uuid();
   }
 
-  public fileName(ext: string): string {
-    return this.uuid() + '.' + ext;
+  public fileName(name: string, ext: string): string {
+    return this.uuid() + `-${name}` + '.' + ext;
   }
 }

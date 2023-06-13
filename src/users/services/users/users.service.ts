@@ -10,6 +10,7 @@ import { ValidatorService } from 'src/shared/services/validator.service';
 import { Address, Event, Gender, Image, Person, User } from 'src/typeorm';
 
 import { CreateUserDto } from 'src/users/dtos/CreateUser/CreateUser.dto';
+import { UpdateAvatarDto } from 'src/users/dtos/UpdateUser/UpdateAvatar.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser/UpdateUser.dto';
 import { CreateUserType } from 'src/users/types/CreateUser';
 import { encodePassword } from 'src/utils/bcrypt';
@@ -160,6 +161,41 @@ export class UsersService {
     return updatedUser;
   }
 
+  async updateAvatar(id: number, image: UpdateAvatarDto): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { image: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const url = await this.awsS3Service.uploadImage(image);
+
+    if (!user.image) {
+      const newImage = this.imageRepository.create({
+        url,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      user.image = newImage;
+      await this.imageRepository.save(newImage);
+    } else {
+      await this.imageRepository.save({
+        ...user.image,
+        url,
+        updatedAt: new Date(),
+      });
+    }
+
+    await this.userRepository.save(user);
+    user.image.url = url;
+
+    return user;
+  }
+
   async deleteUser(id: number): Promise<void> {
     const user = await this.userRepository.findOne({ where: { id } });
 
@@ -192,11 +228,11 @@ export class UsersService {
     return user;
   }
 
-  findUserByUsername(username: string): Promise<User> {
+  async findUserByUsername(username: string): Promise<User> {
     return this.userRepository.findOne({ where: { username } });
   }
 
-  findUserByEmail(email: string): Promise<User> {
+  async findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({
       where: { email },
       relations: { userEvents: false, image: true },
