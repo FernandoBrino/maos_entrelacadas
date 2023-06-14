@@ -1,9 +1,4 @@
-import {
-  BadGatewayException,
-  BadRequestException,
-  Injectable,
-  RawBodyRequest
-} from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { AmountDto } from 'src/donations/dtos/Amount.dto';
 import Stripe from 'stripe';
@@ -17,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   }
 });
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+// const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 @Injectable()
 export class DonationsService {
@@ -41,41 +36,6 @@ export class DonationsService {
     // } catch (err) {
     //   throw new BadRequestException(`Webhook Error: ${err.message}`);
     // }
-    switch (req.body.type) {
-      case 'payment_intent.amount_capturable_updated':
-        const paymentIntentAmountCapturableUpdated = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.amount_capturable_updated
-        return paymentIntentAmountCapturableUpdated;
-      case 'payment_intent.canceled':
-        const paymentIntentCanceled = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.canceled
-        return paymentIntentCanceled;
-      case 'payment_intent.partially_funded':
-        const paymentIntentPartiallyFunded = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.partially_funded
-        return paymentIntentPartiallyFunded;
-      case 'payment_intent.payment_failed':
-        const paymentIntentPaymentFailed = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.payment_failed
-        return paymentIntentPaymentFailed;
-      case 'payment_intent.processing':
-        const paymentIntentProcessing = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.processing
-        return paymentIntentProcessing;
-      case 'payment_intent.requires_action':
-        const paymentIntentRequiresAction = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.requires_action
-        return paymentIntentRequiresAction;
-      case 'payment_intent.created':
-        const paymentIntentPaymentCreated = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.created
-        return paymentIntentPaymentCreated;
-      case 'payment_intent.succeeded':
-        const paymentIntentSucceeded = req.body.data.object;
-        // Then define and call a function to handle the event payment_intent.succeeded
-        return paymentIntentSucceeded;
-      default:
-        throw new BadGatewayException(`Unhandled event type ${req.body.type}`);
-    }
+    return { status: req.body.type };
   }
 }
