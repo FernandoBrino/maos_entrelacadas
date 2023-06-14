@@ -32,6 +32,8 @@ export class AwsS3Service {
     { photoFile }: UpdateAvatarDto,
     folder: Folder = 'Avatar',
   ): Promise<string> {
+
+    console.log('photoFile: ', photoFile)
     const { name, ext } = photoFile;
     const fileName = this.generatorService.fileName(name, ext);
 
