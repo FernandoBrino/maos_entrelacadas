@@ -71,9 +71,9 @@ export class DonationsService {
         // Then define and call a function to handle the event payment_intent.requires_action
         return paymentIntentRequiresAction;
       case 'payment_intent.created':
-        const paymentIntentCreated = event.data.object;
         // Then define and call a function to handle the event payment_intent.created
-        return paymentIntentCreated;
+        console.log('funcionou');
+        return;
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
         // Then define and call a function to handle the event payment_intent.succeeded
