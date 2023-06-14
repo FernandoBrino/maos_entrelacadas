@@ -17,15 +17,12 @@ import { JsonBodyMiddleware } from './middlewares/json-body/json-body.middleware
 export class DonationsModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer
-      .apply(JsonBodyMiddleware)
-      .forRoutes({
-        path: '/donations/webhook',
-        method: RequestMethod.POST
-      })
       .apply(RawBodyMiddleware)
       .forRoutes({
         path: '/donations/webhook',
         method: RequestMethod.POST
-      });
+      })
+      .apply(JsonBodyMiddleware)
+      .forRoutes('*');
   }
 }
