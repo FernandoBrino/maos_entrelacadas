@@ -8,6 +8,7 @@ import { AmountDto } from 'src/donations/dtos/Amount.dto';
 import Stripe from 'stripe';
 import * as dotenv from 'dotenv';
 dotenv.config();
+import { buffer } from 'micro';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
@@ -32,13 +33,14 @@ export class DonationsService {
     return clientSecret;
   }
 
-  receiveStatusPaymentWebhook(req: Request) {
+  async receiveStatusPaymentWebhook(req: Request) {
+    const reqBuffer = await buffer(req);
     const sig = req.headers['stripe-signature'];
 
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(reqBuffer, sig, endpointSecret);
     } catch (err) {
       throw new BadRequestException(`Webhook Error: ${err.message}`);
     }
