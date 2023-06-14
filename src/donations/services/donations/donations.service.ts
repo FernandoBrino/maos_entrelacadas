@@ -8,7 +8,9 @@ import { AmountDto } from 'src/donations/dtos/Amount.dto';
 import Stripe from 'stripe';
 import * as dotenv from 'dotenv';
 dotenv.config();
-import { buffer } from 'micro';
+import express from 'express';
+const app = express();
+import bodyParser from 'body-parser';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
@@ -18,6 +20,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+app.use(bodyParser.json());
 
 @Injectable()
 export class DonationsService {
