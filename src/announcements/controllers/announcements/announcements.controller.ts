@@ -9,7 +9,7 @@ import {
   Post,
   Put,
   UsePipes,
-  ValidationPipe,
+  ValidationPipe
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateAnnouncementDto } from 'src/announcements/dtos/CreateAnnouncement.dto';
@@ -20,7 +20,7 @@ import { AnnouncementsService } from 'src/announcements/services/announcements/a
 export class AnnouncementsController {
   constructor(
     @Inject('ANNOUNCEMENTS_SERVICE')
-    private annoucementService: AnnouncementsService,
+    private annoucementService: AnnouncementsService
   ) {}
 
   @Get()
@@ -43,7 +43,7 @@ export class AnnouncementsController {
   @UsePipes(ValidationPipe)
   updateAnnouncement(
     @Param('id') id: number,
-    @Body() annoucementDto: CreateAnnouncementDto,
+    @Body() annoucementDto: CreateAnnouncementDto
   ) {
     return this.annoucementService.updateAnnouncement(id, annoucementDto);
   }
@@ -52,7 +52,7 @@ export class AnnouncementsController {
   @UsePipes(ValidationPipe)
   replaceAnnouncement(
     @Param('id') id: number,
-    @Body() annoucementDto: CreateAnnouncementDto,
+    @Body() annoucementDto: CreateAnnouncementDto
   ) {
     return this.annoucementService.replaceAnnouncement(id, annoucementDto);
   }
