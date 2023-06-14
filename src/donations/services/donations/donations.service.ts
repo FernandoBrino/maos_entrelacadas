@@ -9,7 +9,6 @@ import Stripe from 'stripe';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { buffer } from 'micro';
-import getRawBody from 'raw-body';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
@@ -40,8 +39,7 @@ export class DonationsService {
     let event;
 
     try {
-      const rawBody = await getRawBody(req);
-      event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
       throw new BadRequestException(`Webhook Error: ${err.message}`);
     }
@@ -72,9 +70,9 @@ export class DonationsService {
         // Then define and call a function to handle the event payment_intent.requires_action
         return paymentIntentRequiresAction;
       case 'payment_intent.created':
+        const paymentIntentPaymentCreated = event.data.object;
         // Then define and call a function to handle the event payment_intent.created
-
-        return { message: 'worked' };
+        return paymentIntentPaymentCreated;
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
         // Then define and call a function to handle the event payment_intent.succeeded
