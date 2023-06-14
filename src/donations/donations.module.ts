@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { DonationsController } from './controllers/donations/donations.controller';
 import { DonationsService } from './services/donations/donations.service';
+import { RawBodyMiddleware } from './middlewares/raw-body/raw-body.middleware';
+import { JsonBodyMiddleware } from './middlewares/json-body/json-body.middleware';
 
 @Module({
   imports: [],
@@ -8,8 +10,19 @@ import { DonationsService } from './services/donations/donations.service';
   providers: [
     {
       provide: 'DONATIONS_SERVICE',
-      useClass: DonationsService,
-    },
-  ],
+      useClass: DonationsService
+    }
+  ]
 })
-export class DonationsModule {}
+export class DonationsModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer
+      .apply(RawBodyMiddleware)
+      .forRoutes({
+        path: '/donations/webhook',
+        method: RequestMethod.POST
+      })
+      .apply(JsonBodyMiddleware)
+      .forRoutes('*');
+  }
+}

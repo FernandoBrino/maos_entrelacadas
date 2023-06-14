@@ -20,9 +20,9 @@ import { DonationsModule } from './donations/donations.module';
     EventsModule,
     SharedModule,
     AnnouncementsModule,
-    DonationsModule,
+    DonationsModule
   ],
   controllers: [],
-  providers: [],
+  providers: []
 })
 export class AppModule {}
