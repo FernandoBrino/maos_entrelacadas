@@ -19,7 +19,7 @@ export class DonationsModule {
     consumer
       .apply(RawBodyMiddleware)
       .forRoutes({
-        path: '/donations/webhook',
+        path: '/webhook',
         method: RequestMethod.POST
       })
       .apply(JsonBodyMiddleware)
