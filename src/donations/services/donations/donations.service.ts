@@ -41,6 +41,7 @@ export class DonationsService {
 
     try {
       event = stripe.webhooks.constructEvent(reqBuffer, sig, endpointSecret);
+      console.log('EVENT======' + event);
     } catch (err) {
       throw new BadRequestException(`Webhook Error: ${err.message}`);
     }
@@ -72,8 +73,8 @@ export class DonationsService {
         return paymentIntentRequiresAction;
       case 'payment_intent.created':
         // Then define and call a function to handle the event payment_intent.created
-        console.log('funcionou');
-        return;
+
+        return { message: 'worked' };
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
         // Then define and call a function to handle the event payment_intent.succeeded
