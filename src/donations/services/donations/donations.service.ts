@@ -34,13 +34,12 @@ export class DonationsService {
   }
 
   async receiveStatusPaymentWebhook(req: Request) {
-    const reqBuffer = Buffer.from(req.body.toString());
     const sig = req.headers['stripe-signature'];
 
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(reqBuffer, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
       throw new BadRequestException(`Webhook Error: ${err.message}`);
     }
