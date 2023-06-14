@@ -9,6 +9,7 @@ import Stripe from 'stripe';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { buffer } from 'micro';
+import getRawBody from 'raw-body';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
@@ -39,7 +40,8 @@ export class DonationsService {
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+      const rawBody = await getRawBody(req);
+      event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
     } catch (err) {
       throw new BadRequestException(`Webhook Error: ${err.message}`);
     }
