@@ -33,52 +33,49 @@ export class DonationsService {
     return clientSecret;
   }
 
-  async receiveStatusPaymentWebhook(req: RawBodyRequest<Request>) {
-    const sig = req.headers['stripe-signature'];
-
-    let event;
-
-    try {
-      event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
-    } catch (err) {
-      throw new BadRequestException(`Webhook Error: ${err.message}`);
-    }
-
-    switch (event.type) {
+  async receiveStatusPaymentWebhook(req: Request) {
+    // const sig = req.headers['stripe-signature'];
+    // let event;
+    // try {
+    //   event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+    // } catch (err) {
+    //   throw new BadRequestException(`Webhook Error: ${err.message}`);
+    // }
+    switch (req.body.type) {
       case 'payment_intent.amount_capturable_updated':
-        const paymentIntentAmountCapturableUpdated = event.data.object;
+        const paymentIntentAmountCapturableUpdated = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.amount_capturable_updated
         return paymentIntentAmountCapturableUpdated;
       case 'payment_intent.canceled':
-        const paymentIntentCanceled = event.data.object;
+        const paymentIntentCanceled = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.canceled
         return paymentIntentCanceled;
       case 'payment_intent.partially_funded':
-        const paymentIntentPartiallyFunded = event.data.object;
+        const paymentIntentPartiallyFunded = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.partially_funded
         return paymentIntentPartiallyFunded;
       case 'payment_intent.payment_failed':
-        const paymentIntentPaymentFailed = event.data.object;
+        const paymentIntentPaymentFailed = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.payment_failed
         return paymentIntentPaymentFailed;
       case 'payment_intent.processing':
-        const paymentIntentProcessing = event.data.object;
+        const paymentIntentProcessing = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.processing
         return paymentIntentProcessing;
       case 'payment_intent.requires_action':
-        const paymentIntentRequiresAction = event.data.object;
+        const paymentIntentRequiresAction = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.requires_action
         return paymentIntentRequiresAction;
       case 'payment_intent.created':
-        const paymentIntentPaymentCreated = event.data.object;
+        const paymentIntentPaymentCreated = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.created
         return paymentIntentPaymentCreated;
       case 'payment_intent.succeeded':
-        const paymentIntentSucceeded = event.data.object;
+        const paymentIntentSucceeded = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.succeeded
         return paymentIntentSucceeded;
       default:
-        throw new BadGatewayException(`Unhandled event type ${event.type}`);
+        throw new BadGatewayException(`Unhandled event type ${req.body.type}`);
     }
   }
 }
