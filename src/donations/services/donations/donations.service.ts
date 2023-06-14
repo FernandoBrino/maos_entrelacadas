@@ -1,4 +1,4 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { AmountDto } from 'src/donations/dtos/Amount.dto';
 import Stripe from 'stripe';
@@ -25,7 +25,9 @@ export class DonationsService {
 
     const clientSecret = paymentIntent.client_secret;
 
-    return clientSecret;
+    return {
+      clientSecret
+    };
   }
 
   async receiveStatusPaymentWebhook(req: Request) {
