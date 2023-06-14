@@ -20,7 +20,7 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 export class DonationsService {
   async createPaymentIntent({ amount }: AmountDto) {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount,
+      amount: amount * 100,
       currency: 'BRL',
       payment_method_types: ['card']
     });
