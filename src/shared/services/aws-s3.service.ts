@@ -13,7 +13,7 @@ export class AwsS3Service {
 
   constructor(
     public configService: ApiConfigService,
-    public generatorService: GeneratorService,
+    public generatorService: GeneratorService
   ) {
     console.log(configService);
     const awsS3Config = configService.awsS3Config;
@@ -23,17 +23,15 @@ export class AwsS3Service {
       region: awsS3Config.bucketRegion,
       credentials: {
         accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY,
-      },
+        secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY
+      }
     });
   }
 
   async uploadImage(
     { photoFile }: UpdateAvatarDto,
-    folder: Folder = 'Avatar',
+    folder: Folder = 'Avatar'
   ): Promise<string> {
-
-    console.log('photoFile: ', photoFile)
     const { name, ext } = photoFile;
     const fileName = this.generatorService.fileName(name, ext);
 
@@ -45,7 +43,7 @@ export class AwsS3Service {
       Body: fileBuffer,
       ACL: 'public-read',
       Key: key,
-      ContentType: `image/${ext}`,
+      ContentType: `image/${ext}`
     });
 
     return `${this.configService.awsS3Config.s3Url}/images/${folder}/${fileName}`;

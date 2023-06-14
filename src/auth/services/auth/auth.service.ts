@@ -9,7 +9,7 @@ import { comparePasswords } from 'src/utils/bcrypt';
 export class AuthService {
   constructor(
     @Inject('USERS_SERVICE') private usersService: UsersService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
@@ -31,7 +31,7 @@ export class AuthService {
 
     return {
       user,
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload)
     };
   }
 
