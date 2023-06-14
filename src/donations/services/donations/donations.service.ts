@@ -6,6 +6,8 @@ import {
 import { Request } from 'express';
 import { AmountDto } from 'src/donations/dtos/Amount.dto';
 import Stripe from 'stripe';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
