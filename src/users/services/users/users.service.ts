@@ -210,7 +210,11 @@ export class UsersService {
   }
 
   async findUserByGoogleId(googleId: string): Promise<User | null> {
-    if (googleId) return this.userRepository.findOne({ where: { googleId } });
+    if (googleId)
+      return this.userRepository.findOne({
+        where: { googleId },
+        relations: { image: true }
+      });
     return null;
   }
 
