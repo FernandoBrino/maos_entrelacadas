@@ -4,9 +4,10 @@ import { AppModule } from './app.module';
 import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bodyParser: false });
+  const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   app.enableCors();
+  app.use(bodyParser.json());
 
   const config = new DocumentBuilder()
     .setTitle('Documentação com Swagger - Mãos entrelaçadas')
