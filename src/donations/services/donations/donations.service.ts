@@ -34,7 +34,7 @@ export class DonationsService {
   }
 
   async receiveStatusPaymentWebhook(req: Request) {
-    const reqBuffer = await buffer(req);
+    const reqBuffer = await buffer(req.body);
     const sig = req.headers['stripe-signature'];
 
     let event;
