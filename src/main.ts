@@ -2,11 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as bodyParser from 'body-parser';
+import express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   app.enableCors();
+  app.use('/donations/webhook', express.raw({ type: '*/*' }));
+  app.use(express.json());
 
   const config = new DocumentBuilder()
     .setTitle('Documentação com Swagger - Mãos entrelaçadas')

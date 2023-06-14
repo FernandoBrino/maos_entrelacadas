@@ -26,7 +26,7 @@ export class DonationsController {
     return this.donationsService.createPaymentIntent(amountDto);
   }
 
-  @Post('/webhook')
+  @Post('webhook')
   webhookStatusPayment(@Req() req: Request) {
     return this.donationsService.receiveStatusPaymentWebhook(req);
   }
