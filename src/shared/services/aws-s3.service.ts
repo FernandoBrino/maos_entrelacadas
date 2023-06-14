@@ -21,6 +21,10 @@ export class AwsS3Service {
     this.s3 = new S3({
       // apiVersion: awsS3Config.bucketApiVersion,
       region: awsS3Config.bucketRegion,
+      credentials: {
+        accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY,
+      },
     });
   }
 
