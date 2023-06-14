@@ -4,7 +4,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { Gender } from './Gender';
 import { Address } from './Address';
@@ -12,7 +12,7 @@ import { Address } from './Address';
 @Entity('person')
 export class Person {
   @PrimaryGeneratedColumn({
-    type: 'bigint',
+    type: 'bigint'
   })
   id: number;
 
@@ -31,7 +31,7 @@ export class Person {
   @Column({ nullable: true, default: null })
   cpf: number;
 
-  @OneToOne(() => Address, { eager: true, nullable: true })
+  @OneToOne(() => Address, { eager: false, nullable: true })
   @JoinColumn()
   address: Address | null;
 

@@ -16,19 +16,19 @@ import { Event } from 'src/typeorm/Event';
       Address,
       Image,
       Event,
-      UserEvent,
+      UserEvent
     ]),
     JwtModule.register({
       secret: process.env.NEST_SECRET_KEY,
-      signOptions: { expiresIn: '600s' },
-    }),
+      signOptions: { expiresIn: '600s' }
+    })
   ],
   controllers: [UsersController],
   providers: [
     {
       provide: 'USERS_SERVICE',
-      useClass: UsersService,
-    },
-  ],
+      useClass: UsersService
+    }
+  ]
 })
 export class UsersModule {}

@@ -58,7 +58,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   async updateAvatar(
     @Param('id', ParseIntPipe) id: number,
-    @Body() image: UpdateAvatarDto,
+    @Body() image: UpdateAvatarDto
   ) {
     return this.usersService.updateAvatar(id, image);
   }

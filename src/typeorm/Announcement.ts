@@ -3,7 +3,7 @@ import {
   Entity,
   JoinColumn,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { Image } from './Image';
 

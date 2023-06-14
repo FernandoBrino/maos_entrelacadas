@@ -1,7 +1,7 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
+  NotFoundException
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -32,12 +32,12 @@ export class UsersService {
     private readonly eventRepository: Repository<Event>,
     private jwtService: JwtService,
     private validatorService: ValidatorService,
-    private awsS3Service: AwsS3Service,
+    private awsS3Service: AwsS3Service
   ) {}
 
   getUsers(): Promise<User[]> {
     return this.userRepository.find({
-      relations: { person: false, userEvents: false, image: true },
+      relations: { person: false, userEvents: false, image: true }
     });
   }
 
@@ -47,9 +47,9 @@ export class UsersService {
 
     const events = await this.eventRepository.find({
       where: {
-        id: In(eventIds),
+        id: In(eventIds)
       },
-      relations: { images: true, userEvents: false },
+      relations: { images: true, userEvents: false }
     });
 
     return events;
@@ -57,7 +57,7 @@ export class UsersService {
 
   async createUser(userProps: CreateUserDto): Promise<CreateUserType> {
     const usernameAlreadyExists = await this.findUserByUsername(
-      userProps.username,
+      userProps.username
     );
     const emailAlreadyTaken = await this.findUserByEmail(userProps.email);
 
@@ -73,12 +73,12 @@ export class UsersService {
 
     const newUser = this.userRepository.create({
       ...userProps,
-      password,
+      password
     });
 
     if (userProps.image) {
       const newImage = this.imageRepository.create({
-        ...userProps.image,
+        ...userProps.image
       });
 
       newUser.image = newImage;
@@ -87,15 +87,15 @@ export class UsersService {
 
     if (userProps.person) {
       const newPerson = this.personRepository.create({
-        ...userProps.person,
+        ...userProps.person
       });
 
       if (userProps.person.gender) {
         const newGender = await this.genderRepository.findOne({
-          where: { name: userProps.person.gender.name },
+          where: { name: userProps.person.gender.name }
         });
 
-        newUser.person.gender = newGender;
+        newPerson.gender = newGender;
       }
 
       newUser.person = newPerson;
@@ -108,7 +108,7 @@ export class UsersService {
 
     return {
       user,
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload)
     };
   }
 
@@ -125,30 +125,30 @@ export class UsersService {
     const updatedUser = this.userRepository.create({
       ...user,
       ...updateUserDto,
-      updatedAt: updateUserDto && new Date(),
+      updatedAt: updateUserDto && new Date()
     });
 
     const updatedImage = this.imageRepository.create({
       ...user.image,
       ...updateUserDto.image,
-      updatedAt: updateUserDto.image && new Date(),
+      updatedAt: updateUserDto.image && new Date()
     });
 
     const updatedPerson = this.personRepository.create({
       ...user.person,
       ...updateUserDto.person,
-      updatedAt: updateUserDto.person && new Date(),
+      updatedAt: updateUserDto.person && new Date()
     });
 
     const updatedAddress = this.addressRepository.create({
       ...user.person.address,
       ...updateUserDto.person.address,
-      updatedAt: updateUserDto.person.address && new Date(),
+      updatedAt: updateUserDto.person.address && new Date()
     });
 
     const updatedGender =
       (await this.genderRepository.findOne({
-        where: { name: updateUserDto.person.gender.name },
+        where: { name: updateUserDto.person.gender.name }
       })) ?? user.person.gender;
 
     updatedUser.image = updatedImage;
@@ -164,7 +164,7 @@ export class UsersService {
   async updateAvatar(id: number, image: UpdateAvatarDto): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: { image: true },
+      relations: { image: true }
     });
 
     if (!user) {
@@ -177,7 +177,7 @@ export class UsersService {
       const newImage = this.imageRepository.create({
         url,
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       });
 
       user.image = newImage;
@@ -186,7 +186,7 @@ export class UsersService {
       await this.imageRepository.save({
         ...user.image,
         url,
-        updatedAt: new Date(),
+        updatedAt: new Date()
       });
     }
 
@@ -218,7 +218,7 @@ export class UsersService {
   async findUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: { person: true, userEvents: true },
+      relations: { person: true, userEvents: true }
     });
 
     if (!user) {
@@ -235,7 +235,7 @@ export class UsersService {
   async findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({
       where: { email },
-      relations: { userEvents: false, image: true },
+      relations: { userEvents: false, image: true }
     });
   }
 }

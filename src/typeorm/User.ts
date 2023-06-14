@@ -5,7 +5,7 @@ import {
   JoinColumn,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { Image } from './Image';
 import { Person } from './Person';
@@ -14,7 +14,7 @@ import { UserEvent } from './UserEvent';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn({
-    type: 'bigint',
+    type: 'bigint'
   })
   id: number;
 
