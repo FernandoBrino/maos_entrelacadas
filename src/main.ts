@@ -7,7 +7,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   app.enableCors();
-  app.use(bodyParser.json());
 
   const config = new DocumentBuilder()
     .setTitle('Documentação com Swagger - Mãos entrelaçadas')
