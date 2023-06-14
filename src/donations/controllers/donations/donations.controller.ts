@@ -3,7 +3,6 @@ import {
   Controller,
   Inject,
   Post,
-  RawBodyRequest,
   Req,
   UsePipes,
   ValidationPipe
@@ -28,7 +27,7 @@ export class DonationsController {
   }
 
   @Post('webhook')
-  webhookStatusPayment(@Req() req: RawBodyRequest<Request>) {
+  webhookStatusPayment(@Req() req: Request) {
     return this.donationsService.receiveStatusPaymentWebhook(req);
   }
 }
