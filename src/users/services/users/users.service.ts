@@ -143,12 +143,6 @@ export class UsersService {
       updatedAt: updateUserDto.person && new Date()
     });
 
-    const updatedAddress = this.addressRepository.create({
-      ...user.person.address,
-      ...updateUserDto.person.address,
-      updatedAt: updateUserDto.person.address && new Date()
-    });
-
     const updatedGender =
       (await this.genderRepository.findOne({
         where: { name: updateUserDto.person.gender.name }
@@ -156,10 +150,10 @@ export class UsersService {
 
     updatedUser.image = updatedImage;
     updatedUser.person = updatedPerson;
-    updatedUser.person.address = updatedAddress;
     updatedUser.person.gender = updatedGender;
 
-    await this.userRepository.update(id, updatedUser);
+    await this.personRepository.update(id, updatedPerson),
+      this.userRepository.update(id, updatedUser);
 
     return updatedUser;
   }
