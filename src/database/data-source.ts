@@ -7,7 +7,7 @@ import { UserEvent } from 'src/typeorm/UserEvent';
 import {
   announcementImagesMigration1685319235654,
   fixUserMigration1686069709047,
-  initialMigration1685293330636,
+  initialMigration1685293330636
 } from './migrations';
 
 dotenv.config();
@@ -27,15 +27,15 @@ export const dataSourceOptions: DataSourceOptions = {
     Address,
     Event,
     Announcement,
-    UserEvent,
+    UserEvent
   ],
   migrations: [
     initialMigration1685293330636,
     announcementImagesMigration1685319235654,
-    fixUserMigration1686069709047,
+    fixUserMigration1686069709047
   ],
   ssl: { rejectUnauthorized: true },
-  synchronize: false,
+  synchronize: false
 };
 
 export const dataSource = new DataSource(dataSourceOptions);

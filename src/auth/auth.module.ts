@@ -25,27 +25,27 @@ dotenv.config();
       Image,
       Address,
       Event,
-      UserEvent,
+      UserEvent
     ]),
     PassportModule,
     JwtModule.register({
-      secret: process.env.NEST_SECRET_KEY,
-      signOptions: { expiresIn: '600s' },
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '600s' }
     }),
-    ConfigModule,
+    ConfigModule
   ],
   controllers: [AuthController],
   providers: [
     {
       provide: 'AUTH_SERVICE',
-      useClass: AuthService,
+      useClass: AuthService
     },
     {
       provide: 'USERS_SERVICE',
-      useClass: UsersService,
+      useClass: UsersService
     },
     JwtStrategy,
-    LocalStrategy,
-  ],
+    LocalStrategy
+  ]
 })
 export class AuthModule {}

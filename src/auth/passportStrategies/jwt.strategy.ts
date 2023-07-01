@@ -13,14 +13,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('NEST_SECRET_KEY'),
+      secretOrKey: configService.get<string>('JWT_SECRET_KEY')
     });
   }
 
   async validate(payload: PayloadType) {
     return {
       id: payload.sub,
-      email: payload.email,
+      email: payload.email
     };
   }
 }

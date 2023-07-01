@@ -19,7 +19,7 @@ import { Event } from 'src/typeorm/Event';
       UserEvent
     ]),
     JwtModule.register({
-      secret: process.env.NEST_SECRET_KEY,
+      secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '600s' }
     })
   ],
