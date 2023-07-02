@@ -60,7 +60,7 @@ Contributions are welcome! If you find any issues, have suggestions, or want to 
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the ISC License.
 
 ---
 Created by [Fernando Brino](https://github.com/FernandoBrino)
