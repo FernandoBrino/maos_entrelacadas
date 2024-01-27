@@ -15,7 +15,6 @@ export class AwsS3Service {
     public configService: ApiConfigService,
     public generatorService: GeneratorService
   ) {
-    console.log(configService);
     const awsS3Config = configService.awsS3Config;
 
     this.s3 = new S3({
